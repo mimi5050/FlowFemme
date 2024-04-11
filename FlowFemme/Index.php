@@ -98,10 +98,9 @@
 
 <body>
 <header>
-  <img src="Images/Logo.png" alt="Logo"/>
+  <img src="Images/slide1.png" alt="Logo"/>
     <div class="container">
       <div class="navigation">
-      <img src="Images/Logo.png" alt="Logo"/>
         <a href="Index.php"> Home</a>
         <a href="AboutUs.php">About Us</a>
         <a href="ourservices.php">Our Services</a>
