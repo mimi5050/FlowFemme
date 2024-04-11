@@ -1,6 +1,6 @@
 <?php
 
-<h1> I am live now </h1>
+echo "<h1> hello world </h1>"
 
 
 ?>
