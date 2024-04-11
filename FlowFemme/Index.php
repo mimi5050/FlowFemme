@@ -98,7 +98,7 @@
 
 <body>
 <header>
-  <img src="Images/slide1.png" alt="Logo"/>
+  <img src="Images/logo.png" alt="Logo"/>
     <div class="container">
       <div class="navigation">
         <a href="Index.php"> Home</a>
