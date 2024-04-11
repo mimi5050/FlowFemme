@@ -42,7 +42,6 @@ if ($result->num_rows > 0) {
 
 // Close the statement and connection
 $stmt->close();
-$conn->close();
 ?>
 
 <!DOCTYPE html>
