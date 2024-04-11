@@ -47,7 +47,7 @@ $stmt->close();
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dashboard | TalentHub</title>
+  <title>Dashboard | FlowFemme</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -496,7 +496,7 @@ function getPhase(day) {
   const menstruationLength = <?php echo $menstruationLength; ?>;
   
   // Calculate the day relative to the menstrual period start date
-  const relativeDay = (day % cycleLength) + 1;
+  const relativeDay = (day % cycleLength);
 
   // Calculate the expected day of ovulation
   const ovulationDay = cycleLength / 2;
