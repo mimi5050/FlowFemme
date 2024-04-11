@@ -267,7 +267,7 @@ button[type="submit"]:hover {
 
         <div class="sidenav">
         <div class="topnav-centered">
-            <img src="images/logo.png" alt="Logo" style="height: 50px; margin-bottom:20px; margin-top:10px;">
+            <img src="Images/logo.png" alt="Logo" style="height: 50px; margin-bottom:20px; margin-top:10px;">
         </div>
         <ul> 
             <li><a href="dashboard.php"><i class="fas fa-home"></i>Overview </a></li>

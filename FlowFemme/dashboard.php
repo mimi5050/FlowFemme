@@ -483,7 +483,7 @@ if ($result) {
 
         <div class="sidenav">
             <div class="topnav-centered">
-            <img src="images/logo.png" alt="Logo" style="height: 50px; margin-bottom:20px; margin-top:10px;">
+            <img src="Images/logo.png" alt="Logo" style="height: 50px; margin-bottom:20px; margin-top:10px;">
         </div>
           <a class="active" href="#"><i class="fas fa-home"></i> Overview</a>
           <li><a href="cycle_tracking.php"><i class="fas fa-calendar-alt"></i> Menstrual Cycle Tracking</a></li>

@@ -139,7 +139,7 @@
 
 <body>
   <header>
-  <img class="logo" src="Images/Logo.png" alt="Logo">
+  <img class="logo" src="Images/logo.png" alt="Logo">
     <div class="container">
       <div class="navigation">
         <a href="Index.php"> Home</a>
