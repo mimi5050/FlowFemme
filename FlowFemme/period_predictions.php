@@ -504,6 +504,10 @@ if ($result) {
 </main>
 <script>
     function deletePrediction(predictionID) {
+        // Create overlay element
+        var overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
         // Create a div element for the popup
         var popup = document.createElement('div');
         popup.classList.add('popup');
@@ -537,7 +541,8 @@ if ($result) {
             // Send the prediction ID as data in the POST request
             xhr.send("prediction_id=" + predictionID);
 
-            // Remove the popup from the DOM
+            // Remove the overlay and popup from the DOM
+            document.body.removeChild(overlay);
             document.body.removeChild(popup);
         };
         popup.appendChild(confirmButton);
@@ -546,17 +551,23 @@ if ($result) {
         cancelButton.innerText = "Cancel";
         cancelButton.style.backgroundColor = "#ccc"; 
         cancelButton.onclick = function() {
-            // Remove the popup from the DOM
+            // Remove the overlay and popup from the DOM
+            document.body.removeChild(overlay);
             document.body.removeChild(popup);
         };
         popup.appendChild(cancelButton);
 
-        // Add the popup to the body
+        // Append overlay and popup to the body
+        document.body.appendChild(overlay);
         document.body.appendChild(popup);
     }
 
     
     function updatePrediction(predictionID) {
+        // Create overlay element
+        var overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+
         // Create a div element for the popup
         var popup = document.createElement('div');
         popup.classList.add('popup');
@@ -616,7 +627,8 @@ if ($result) {
             formData.append("prediction_id", predictionID);
             xhr.send(new URLSearchParams(formData));
 
-            // Remove the popup from the DOM
+            // Remove the overlay and popup from the DOM
+            document.body.removeChild(overlay);
             document.body.removeChild(popup);
         };
 
@@ -630,10 +642,10 @@ if ($result) {
 
         popup.appendChild(form);
 
-        // Add the popup to the body
+        // Append overlay and popup to the body
+        document.body.appendChild(overlay);
         document.body.appendChild(popup);
     }
 </script>
-
 </body>
 </html>
