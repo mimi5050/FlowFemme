@@ -382,7 +382,7 @@ table{
                         // Add action buttons
                         echo "<td>";
                         echo "<a href='update_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-edit'></i></a>";
-                        echo "<a href='delete_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-trash'></i></a>";
+                        echo "<a href='delete_fertility_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-trash'></i></a>";
                         echo "</td>";
                         echo "</tr>";
                     }
