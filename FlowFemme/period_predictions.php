@@ -486,7 +486,8 @@ if ($result) {
                     echo '<button class="action-button" onclick="deletePrediction(' . $row['PredictionID'] . ')">Delete</button>';
                     echo '</td>';
                     echo '</tr>';
-                }
+                }echo '<button class="action-button" onclick="updatePrediction(' . $row['PredictionID'] . ')">Update</button>';
+
             } else {
                 // If no data found, display a message
                 echo '<tr><td colspan="6">No period predictions available.</td></tr>';
@@ -549,6 +550,85 @@ if ($result) {
             document.body.removeChild(popup);
         };
         popup.appendChild(cancelButton);
+
+        // Add the popup to the body
+        document.body.appendChild(popup);
+    }
+
+    
+    function updatePrediction(predictionID) {
+        // Create a div element for the popup
+        var popup = document.createElement('div');
+        popup.classList.add('popup');
+
+        // Create input fields for updating the prediction data
+        var form = document.createElement('form');
+        form.id = "updatePredictionForm";
+
+        var lastPeriodDateLabel = document.createElement('label');
+        lastPeriodDateLabel.innerHTML = "Last Period Date:";
+        var lastPeriodDateInput = document.createElement('input');
+        lastPeriodDateInput.type = "date";
+        lastPeriodDateInput.id = "updatedLastPeriodDate";
+        lastPeriodDateInput.name = "updatedLastPeriodDate";
+        lastPeriodDateInput.required = true;
+
+        var cycleLengthLabel = document.createElement('label');
+        cycleLengthLabel.innerHTML = "Enter Cycle Length:";
+        var cycleLengthInput = document.createElement('input');
+        cycleLengthInput.type = "number";
+        cycleLengthInput.id = "updatedCycleLength";
+        cycleLengthInput.name = "updatedCycleLength";
+        cycleLengthInput.placeholder = "Enter average cycle length";
+
+        var periodLengthLabel = document.createElement('label');
+        periodLengthLabel.innerHTML = "Period Length (in days):";
+        var periodLengthInput = document.createElement('input');
+        periodLengthInput.type = "number";
+        periodLengthInput.id = "updatedPeriodLength";
+        periodLengthInput.name = "updatedPeriodLength";
+        periodLengthInput.placeholder = "Enter average period length";
+
+        var updateButton = document.createElement('button');
+        updateButton.type = "submit";
+        updateButton.innerText = "Update";
+        updateButton.onclick = function(event) {
+            event.preventDefault();
+            // Send an AJAX request to update the prediction data
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_prediction.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // If update was successful, reload the page to reflect changes
+                        location.reload();
+                    } else {
+                        // If an error occurred, display an error message
+                        alert("Failed to update prediction: " + response.error);
+                    }
+                }
+            };
+            // Send the updated prediction data as data in the POST request
+            var formData = new FormData(document.getElementById("updatePredictionForm"));
+            formData.append("prediction_id", predictionID);
+            xhr.send(new URLSearchParams(formData));
+
+            // Remove the popup from the DOM
+            document.body.removeChild(popup);
+        };
+
+        form.appendChild(lastPeriodDateLabel);
+        form.appendChild(lastPeriodDateInput);
+        form.appendChild(cycleLengthLabel);
+        form.appendChild(cycleLengthInput);
+        form.appendChild(periodLengthLabel);
+        form.appendChild(periodLengthInput);
+        form.appendChild(updateButton);
+
+        popup.appendChild(form);
 
         // Add the popup to the body
         document.body.appendChild(popup);
