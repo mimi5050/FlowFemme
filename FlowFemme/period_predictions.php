@@ -400,8 +400,8 @@ if ($result) {
         border: 1px solid #ccc;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        max-width: 300px;
-        height:300px;
+        max-width: 350px;
+        height:350px;
         text-align: center;
         z-index: 1000;
 }
@@ -419,6 +419,7 @@ if ($result) {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
+    margin-right:20px;
 }
 
 .update-popup button[type="submit"],
@@ -431,6 +432,7 @@ if ($result) {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-right: 10px;
+    margin-bottom: 20px;
 }
 
 .update-popup button[type="submit"]:hover,
