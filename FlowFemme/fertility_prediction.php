@@ -310,5 +310,58 @@ button[type="submit"]:hover {
         </form>
     </div>
 </section>
+<section class="fertility-prediction-table">
+        <h2>Fertility Predictions Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prediction ID</th>
+                    <th>User ID</th>
+                    <th>Last Period Date</th>
+                    <th>Average Cycle Length</th>
+                    <th>Average Period Length</th>
+                    <th>Fertile Start Date</th>
+                    <th>Fertile End Date</th>
+                    <th>Actions</th> <!-- New column for actions -->
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Include your database connection file
+                include 'db_connection.php';
+
+                // Fetch fertility predictions from the database
+                $sql = "SELECT * FROM fertilitypredictions";
+                $result = mysqli_query($conn, $sql);
+
+                // Check if there are any rows in the result
+                if (mysqli_num_rows($result) > 0) {
+                    // Output data of each row
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>" . $row["PredictionID"] . "</td>";
+                        echo "<td>" . $row["UserID"] . "</td>";
+                        echo "<td>" . $row["LastPeriodDate"] . "</td>";
+                        echo "<td>" . $row["AverageCycleLength"] . "</td>";
+                        echo "<td>" . $row["AveragePeriodLength"] . "</td>";
+                        echo "<td>" . $row["FertileStartDate"] . "</td>";
+                        echo "<td>" . $row["FertileEndDate"] . "</td>";
+                        // Add action buttons
+                        echo "<td>";
+                        echo "<a href='update_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-edit'></i></a>";
+                        echo "<a href='delete_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-trash'></i></a>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='8'>No fertility predictions found</td></tr>";
+                }
+
+                // Close the database connection
+                mysqli_close($conn);
+                ?>
+            </tbody>
+        </table>
+    </section>
 </body>
 </html>
