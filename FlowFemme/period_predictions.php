@@ -454,30 +454,30 @@ if ($result) {
 
 </main>
 <script>
-function deletePrediction(predictionID) {
-    // Confirm with the user before proceeding with the deletion
-    if (confirm("Are you sure you want to delete this prediction?")) {
-        // Send an AJAX request to the server to delete the prediction
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "delete_prediction.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Parse the JSON response
-                var response = JSON.parse(xhr.responseText);
-                if (response.success) {
-                    // If deletion was successful, reload the page to reflect changes
-                    location.reload();
-                } else {
-                    // If an error occurred, display an error message
-                    alert("Failed to delete prediction: " + response.error);
+    function deletePrediction(predictionID) {
+        // Confirm with the user before proceeding with the deletion
+        if (confirm("Are you sure you want to delete this prediction?")) {
+            // Send an AJAX request to the server to delete the prediction
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "delete_prediction.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // If deletion was successful, reload the page to reflect changes
+                        location.reload();
+                    } else {
+                        // If an error occurred, display an error message
+                        alert("Failed to delete prediction: " + response.error);
+                    }
                 }
-            }
-        };
-        // Send the prediction ID as data in the POST request
-        xhr.send("prediction_id=" + predictionID);
+            };
+            // Send the prediction ID as data in the POST request
+            xhr.send("prediction_id=" + predictionID);
+        }
     }
-}
 </script>
 </body>
 </html>
