@@ -319,8 +319,9 @@ if ($result) {
     }
 
     table{
-      width:60%;
+      width:100%;
       margin-left:20%;
+    
     }
    
     table tr {
