@@ -360,7 +360,7 @@ if ($result) {
         padding: 20px;
         max-width: 300px;
         text-align: center;
-        z-index: 1000;
+        z-index: 999;
         background-color: rgba(0, 0, 0, 0.5);
     }
 
