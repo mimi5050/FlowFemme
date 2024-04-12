@@ -180,8 +180,6 @@ if ($result) {
                 ?>
 
                 </span></li>
-
-                <li><span class="icon icon-2"></span> Fertile window: <span class="highlight">
                 <?php
                     // Query to fetch the start date of the period for the user
                     $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
@@ -219,7 +217,6 @@ if ($result) {
 
 
                 </span></li>
-                <li><span class="icon icon-3"></span> Recommended conception timing: <span class="highlight">
                 <?php
                 // Query to fetch the start date of the period for the user
                 $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
