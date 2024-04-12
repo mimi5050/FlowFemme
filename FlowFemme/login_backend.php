@@ -27,10 +27,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: dashboard.php");
             exit();
         } else {
-            echo "Invalid email or password";
+            // Invalid password, set error message
+            $_SESSION["error_message"] = "Invalid email or password";
+            // Redirect back to login page
+            header("Location: login.php");
+            exit();
         }
     } else {
-        echo "User not found";
+        // User not found, set error message
+        $_SESSION["error_message"] = "User not found";
+        // Redirect back to login page
+        header("Location: login.php");
+        exit();
     }
 }
 

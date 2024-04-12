@@ -98,6 +98,15 @@
             <input type="email" name="email" id="email" placeholder="Email" required>
             <input type="password" name="password" id="password" placeholder="Password" required>
             <button type="submit">Login</button>
+            <?php
+            // Check if error message exists
+            if (isset($_SESSION["error_message"])) {
+                // Display error message
+                echo "<p class='error-message'>" . $_SESSION["error_message"] . "</p>";
+                // Remove error message from session
+                unset($_SESSION["error_message"]);
+            }
+            ?>
         </form>
         <p>Don't have an account? <a href="signUp.php">Sign up</a></p>
     </div>
