@@ -564,88 +564,98 @@ if ($result) {
 
     
     function updatePrediction(predictionID) {
-        // Create overlay element
-        var overlay = document.createElement('div');
-        overlay.classList.add('overlay');
+    // Create overlay element
+    var overlay = document.createElement('div');
+    overlay.classList.add('overlay');
 
-        // Create a div element for the popup
-        var popup = document.createElement('div');
-        popup.classList.add('popup');
+    // Create a div element for the popup
+    var popup = document.createElement('div');
+    popup.classList.add('popup');
 
-        // Create input fields for updating the prediction data
-        var form = document.createElement('form');
-        form.id = "updatePredictionForm";
+    // Create input fields for updating the prediction data
+    var form = document.createElement('form');
+    form.id = "updatePredictionForm";
 
-        var lastPeriodDateLabel = document.createElement('label');
-        lastPeriodDateLabel.innerHTML = "Last Period Date:";
-        var lastPeriodDateInput = document.createElement('input');
-        lastPeriodDateInput.type = "date";
-        lastPeriodDateInput.id = "updatedLastPeriodDate";
-        lastPeriodDateInput.name = "updatedLastPeriodDate";
-        lastPeriodDateInput.required = true;
+    var lastPeriodDateLabel = document.createElement('label');
+    lastPeriodDateLabel.innerHTML = "Last Period Date:";
+    var lastPeriodDateInput = document.createElement('input');
+    lastPeriodDateInput.type = "date";
+    lastPeriodDateInput.id = "updatedLastPeriodDate";
+    lastPeriodDateInput.name = "updatedLastPeriodDate";
+    lastPeriodDateInput.required = true;
 
-        var cycleLengthLabel = document.createElement('label');
-        cycleLengthLabel.innerHTML = "Enter Cycle Length:";
-        var cycleLengthInput = document.createElement('input');
-        cycleLengthInput.type = "number";
-        cycleLengthInput.id = "updatedCycleLength";
-        cycleLengthInput.name = "updatedCycleLength";
-        cycleLengthInput.placeholder = "Enter average cycle length";
+    var cycleLengthLabel = document.createElement('label');
+    cycleLengthLabel.innerHTML = "Enter Cycle Length:";
+    var cycleLengthInput = document.createElement('input');
+    cycleLengthInput.type = "number";
+    cycleLengthInput.id = "updatedCycleLength";
+    cycleLengthInput.name = "updatedCycleLength";
+    cycleLengthInput.placeholder = "Enter average cycle length";
 
-        var periodLengthLabel = document.createElement('label');
-        periodLengthLabel.innerHTML = "Period Length (in days):";
-        var periodLengthInput = document.createElement('input');
-        periodLengthInput.type = "number";
-        periodLengthInput.id = "updatedPeriodLength";
-        periodLengthInput.name = "updatedPeriodLength";
-        periodLengthInput.placeholder = "Enter average period length";
+    var periodLengthLabel = document.createElement('label');
+    periodLengthLabel.innerHTML = "Period Length (in days):";
+    var periodLengthInput = document.createElement('input');
+    periodLengthInput.type = "number";
+    periodLengthInput.id = "updatedPeriodLength";
+    periodLengthInput.name = "updatedPeriodLength";
+    periodLengthInput.placeholder = "Enter average period length";
 
-        var updateButton = document.createElement('button');
-        updateButton.type = "submit";
-        updateButton.innerText = "Update";
-        updateButton.onclick = function(event) {
-            event.preventDefault();
-            // Send an AJAX request to update the prediction data
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "update_prediction.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Parse the JSON response
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        // If update was successful, reload the page to reflect changes
-                        location.reload();
-                    } else {
-                        // If an error occurred, display an error message
-                        alert("Failed to update prediction: " + response.error);
-                    }
+    var updateButton = document.createElement('button');
+    updateButton.type = "submit";
+    updateButton.innerText = "Update";
+    updateButton.onclick = function(event) {
+        event.preventDefault();
+        // Send an AJAX request to update the prediction data
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "update_prediction.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Parse the JSON response
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    // If update was successful, reload the page to reflect changes
+                    location.reload();
+                } else {
+                    // If an error occurred, display an error message
+                    alert("Failed to update prediction: " + response.error);
                 }
-            };
-            // Send the updated prediction data as data in the POST request
-            var formData = new FormData(document.getElementById("updatePredictionForm"));
-            formData.append("prediction_id", predictionID);
-            xhr.send(new URLSearchParams(formData));
-
-            // Remove the overlay and popup from the DOM
-            document.body.removeChild(overlay);
-            document.body.removeChild(popup);
+            }
         };
+        // Send the updated prediction data as data in the POST request
+        var formData = new FormData(document.getElementById("updatePredictionForm"));
+        formData.append("prediction_id", predictionID);
+        xhr.send(new URLSearchParams(formData));
 
-        form.appendChild(lastPeriodDateLabel);
-        form.appendChild(lastPeriodDateInput);
-        form.appendChild(cycleLengthLabel);
-        form.appendChild(cycleLengthInput);
-        form.appendChild(periodLengthLabel);
-        form.appendChild(periodLengthInput);
-        form.appendChild(updateButton);
+        // Remove the overlay and popup from the DOM
+        document.body.removeChild(overlay);
+        document.body.removeChild(popup);
+    };
 
-        popup.appendChild(form);
+    // Create a cancel button to close the popup
+    var cancelButton = document.createElement('button');
+    cancelButton.innerText = "Cancel";
+    cancelButton.onclick = function() {
+        // Remove the overlay and popup from the DOM
+        document.body.removeChild(overlay);
+        document.body.removeChild(popup);
+    };
 
-        // Append overlay and popup to the body
-        document.body.appendChild(overlay);
-        document.body.appendChild(popup);
-    }
+    form.appendChild(lastPeriodDateLabel);
+    form.appendChild(lastPeriodDateInput);
+    form.appendChild(cycleLengthLabel);
+    form.appendChild(cycleLengthInput);
+    form.appendChild(periodLengthLabel);
+    form.appendChild(periodLengthInput);
+    form.appendChild(updateButton);
+    form.appendChild(cancelButton); 
+
+    popup.appendChild(form);
+
+    // Append overlay and popup to the body
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+}
 </script>
 </body>
 </html>
