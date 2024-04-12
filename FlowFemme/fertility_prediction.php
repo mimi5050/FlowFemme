@@ -255,6 +255,34 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: grey;
 }
+table{
+      width:80%;
+      margin-left:20%;
+      font-size:12px;
+    
+    }
+   
+    table tr {
+        background-color: #f2f2f2; 
+    }
+
+    
+    table th {
+        background-color: #07bca3; 
+        color: white; 
+        padding: 10px; 
+    }
+
+  
+    table tbody {
+        color: #333; 
+        font-size:12px;
+    }
+
+  
+    table td {
+        padding: 10px; 
+    }
 
   
     </style>
