@@ -318,6 +318,10 @@ if ($result) {
         background-color: #05a393; 
     }
 
+    table{
+      width:60%;
+      margin-left:20%;
+    }
    
     table tr {
         background-color: #f2f2f2; /* Set background color for table rows */
