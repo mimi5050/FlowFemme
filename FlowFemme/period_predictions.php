@@ -369,7 +369,7 @@ if ($result) {
         border: 1px solid #ccc;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        max-width: 300px;
+        width:30%;
         text-align: center;
         z-index: 1000;
        
@@ -486,7 +486,7 @@ if ($result) {
                     echo '<button class="action-button" onclick="deletePrediction(' . $row['PredictionID'] . ')">Delete</button>';
                     echo '</td>';
                     echo '</tr>';
-                }echo '<button class="action-button" onclick="updatePrediction(' . $row['PredictionID'] . ')">Update</button>';
+                }
 
             } else {
                 // If no data found, display a message
