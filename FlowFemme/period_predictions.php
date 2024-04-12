@@ -349,6 +349,39 @@ if ($result) {
         padding: 10px; 
     }
 
+     /* Styling for the popup */
+     .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 300px;
+        text-align: center;
+        z-index: 1000;
+    }
+
+    .popup div {
+        margin-bottom: 20px;
+    }
+
+    .popup button {
+        background-color: #07bca3;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin: 0 10px;
+    }
+
+    .popup button:hover {
+        background-color: #05a393;
+    }
   
     </style>
 
