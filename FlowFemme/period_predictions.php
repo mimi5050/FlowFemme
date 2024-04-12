@@ -319,7 +319,7 @@ if ($result) {
     }
 
     table{
-      width:100%;
+      width:80%;
       margin-left:20%;
     
     }
