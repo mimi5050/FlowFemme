@@ -382,6 +382,64 @@ if ($result) {
     .popup button:hover {
         background-color: #05a393;
     }
+
+    .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.popup div {
+    margin-bottom: 20px;
+}
+
+.popup button {
+    background-color: #07bca3;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 10px;
+}
+
+.popup button:hover {
+    background-color: #05a393;
+}
+
+.popup label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.popup input[type="date"],
+.popup input[type="number"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.popup input[type="number"]::placeholder {
+    color: #999;
+}
+
+.popup small {
+    color: #888;
+}
+
   
     </style>
 
