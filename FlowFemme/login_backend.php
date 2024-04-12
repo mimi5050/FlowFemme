@@ -1,7 +1,7 @@
 <?php
 // Start session
 session_start();
-// Include connection.php to establish a database connection
+//  establish a database connection
 include 'connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

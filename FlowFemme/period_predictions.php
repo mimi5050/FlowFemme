@@ -6,7 +6,7 @@ session_start();
 if (!isset($_SESSION['UserID'])) {
     // Redirect the user to the login page if not logged in
     header("Location: login.php");
-    exit(); // Stop script execution
+    exit(); 
 }
 
 // Include connection.php to establish database connection
@@ -42,7 +42,7 @@ if ($result) {
     echo "Error: " . mysqli_error($conn);
 }
 
-// Now the $data array contains the fetched data from both tables
+
 
 
 ?>

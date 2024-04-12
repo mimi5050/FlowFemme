@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Include connection.php to establish a database connection
+// establish a database connection
 include 'connection.php';
 
 // Check if the user is logged in

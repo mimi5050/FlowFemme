@@ -1,5 +1,5 @@
 <?php
-// Include the database connection file
+// Establish the connection to the database
 include_once "connection.php";
 
 // Check if the request method is POST

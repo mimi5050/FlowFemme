@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Services - TalentHub</title>
+  <title>Our Services - Ourservices</title>
   <style>
     body {
       font-family: Arial, sans-serif;

@@ -9,7 +9,7 @@ if (!isset($_SESSION['UserID'])) {
     exit(); // Stop script execution
 }
 
-// Include connection.php to establish database connection
+// Include establish database connection
 include 'connection.php';
 
 // Fetch logged-in user's ID from session
@@ -42,5 +42,4 @@ if ($result) {
     echo "Error: " . mysqli_error($conn);
 }
 
-// Now the $data array contains the fetched data from both tables
 ?>

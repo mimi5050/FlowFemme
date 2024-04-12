@@ -9,7 +9,7 @@ if (!isset($_SESSION['UserID'])) {
     exit(); // Stop script execution
 }
 
-// Include connection.php to establish database connection
+
 include 'connection.php';
 
 // Fetch logged-in user's ID from session
@@ -18,7 +18,7 @@ $userID = $_SESSION['UserID'];
 // Initialize an empty array to store the fetched data
 $data = array();
 
-// Query to fetch data from periodpredictions and fertilitypredictions tables for the logged-in user
+
 $query = "SELECT pp.*, fp.*
           FROM periodpredictions AS pp
           LEFT JOIN fertilitypredictions AS fp ON pp.UserID = fp.UserID
@@ -42,7 +42,7 @@ if ($result) {
     echo "Error: " . mysqli_error($conn);
 }
 
-// Now the $data array contains the fetched data from both tables
+
 
 
 ?>
@@ -518,7 +518,7 @@ if ($result) {
 
           $stmt = $conn->prepare($query);
 
-          $stmt->bind_param("i", $userID); // Bind user ID to the query
+          $stmt->bind_param("i", $userID); 
 
           $stmt->execute();
 
@@ -547,7 +547,7 @@ if ($result) {
 
             $stmt = $conn->prepare($query);
 
-            $stmt->bind_param("i", $userID); // Bind user ID to the query
+            $stmt->bind_param("i", $userID);
 
             $stmt->execute();
 
@@ -584,7 +584,7 @@ if ($result) {
               
                   // Calculate ovulation date
                   $ovulationDate = clone $lastPeriodDate;
-                  $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); // Ovulation occurs around half the average cycle length
+                  $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); 
               
                   // Display ovulation date
                   echo "<p><strong>" . $ovulationDate->format('Y-m-d') . "</strong></p>";
@@ -614,7 +614,7 @@ if ($result) {
 
                 // Calculate ovulation date
                 $ovulationDate = clone $lastPeriodDate;
-                $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); // Ovulation occurs around half the average cycle length
+                $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); 
 
                 // Calculate the number of days since ovulation
                 $now = new DateTime();
@@ -660,7 +660,7 @@ if ($result) {
 
                       // Calculate ovulation date
                       $ovulationDate = clone $lastPeriodDate;
-                      $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); // Ovulation occurs around half the average cycle length
+                      $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); 
 
                       // Calculate countdown to ovulation
                       $now = new DateTime();

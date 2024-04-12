@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Include connection.php to establish a database connection
+//  establish a database connection
 include 'connection.php';
 
 // Check if the user is logged in
@@ -23,8 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("ssi", $newEmail, $newPassword, $userID);
             if ($stmt->execute()) {
-                // Email and password updated successfully
-                // You can redirect the user or show a success message here
+                
             } else {
                 // Error updating email and password
                 echo "Error updating email and password.";
@@ -35,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Error preparing statement.";
         }
     }
-    exit(); // Prevent further execution of the script
+    exit(); 
 }
 
 // Retrieve user information from the database

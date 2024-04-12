@@ -50,7 +50,7 @@
     <div class="logout-container">
         <h2>Logout</h2>
         <p>Are you sure you want to log out?</p>
-        <p>If you log out, you will be redirected to the login page.</p>
+        <p>If you log out, you will be redirected to the home page.</p>
         <a href="Index.php">Yes, Logout</a>
         <a href="dashboard.php">No, Go Back to Dashboard</a>
     </div>

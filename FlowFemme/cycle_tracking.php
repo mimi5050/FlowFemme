@@ -1,5 +1,5 @@
 <?php
-// Start or resume a session
+// Start a session
 session_start();
 
 // Check if the user is logged in
@@ -9,7 +9,7 @@ if (!isset($_SESSION['UserID'])) {
     exit(); // Stop script execution
 }
 
-// Include connection.php to establish database connection
+// establish database connection
 include 'connection.php';
 
 // Fetch logged-in user's ID from session
@@ -35,12 +35,12 @@ if ($result->num_rows > 0) {
     $cycleLength = $row["AverageCycleLength"];
     $menstruationLength = $row["AveragePeriodLength"];
     
-    // Now you can use $cycleLength and $menstruationLength as needed
+   
 } else {
-    // Handle the case where no rows are returned
+    
 }
 
-// Close the statement and connection
+
 $stmt->close();
 ?>
 

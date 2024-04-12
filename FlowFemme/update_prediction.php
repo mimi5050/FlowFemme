@@ -45,7 +45,7 @@ if(isset($_POST['prediction_id'])) {
     $stmt->close();
     $conn->close();
 } else {
-    // If prediction ID is not provided in the POST request, send error response
+    
     $response = array("success" => false, "error" => "Prediction ID not provided.");
     echo json_encode($response);
 }
