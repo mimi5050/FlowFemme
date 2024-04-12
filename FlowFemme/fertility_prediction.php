@@ -316,13 +316,16 @@ table{
 
   
     </style>
- <div class="overlay" id="overlay">
+
+<div class="overlay" id="overlay">
     <div class="popup" id="popup">
         <p>Are you sure you want to delete this fertility prediction?</p>
+        <input type="hidden" id="predictionID" name="predictionID"> 
         <button onclick="cancelDelete()">Cancel</button>
-        <button onclick="confirmDelete()">Delete</button>
+        <button onclick="deletePrediction()">Delete</button>
     </div>
 </div>
+
 
     <div class="container">
         <div class="topnav">
@@ -427,27 +430,25 @@ table{
     </section>
     <script>
 // Function to display confirmation popup
-function confirmDelete(predictionID) {
-    // Redirect to delete_fertility_prediction.php with predictionID parameter
-    window.location.href = "delete_fertility_prediction.php?id=" + predictionID;
-}
-
-// Function to cancel delete operation
-function cancelDelete() {
-    // Hide the overlay and popup
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('popup').style.display = 'none';
-}
-
-// Function to display confirmation popup when delete icon is clicked
 function showConfirmation(predictionID) {
     // Display the overlay and popup
     document.getElementById('overlay').style.display = 'flex';
     document.getElementById('popup').style.display = 'block';
 
-    // Store the predictionID in a hidden input field (if needed)
+    // Store the predictionID in a hidden input field
     document.getElementById('predictionID').value = predictionID;
 }
+
+// Function to delete fertility prediction
+function deletePrediction() {
+    // Get the predictionID from the hidden input field
+    var predictionID = document.getElementById('predictionID').value;
+
+    // Redirect to delete_fertility_prediction.php with predictionID parameter
+    window.location.href = "delete_fertility_prediction.php?id=" + predictionID;
+}
+
+
 </script>
 </body>
 </html>
