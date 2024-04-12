@@ -312,6 +312,7 @@ if ($result) {
         cursor: pointer;
         transition: background-color 0.3s;
         margin-right: 5px;
+        font-size:12px;
     }
 
     .action-button:hover {
