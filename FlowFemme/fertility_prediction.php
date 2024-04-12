@@ -291,11 +291,38 @@ table{
     margin-bottom: 20px; 
     text-align:center;
 }
+.overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        display: none; /* Initially hidden */
+        justify-content: center;
+        align-items: center;
+        z-index: 999; /* Ensure it's above other content */
+    }
 
+    /* CSS for popup */
+    .popup {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        display: none; /* Initially hidden */
+        z-index: 1000; /* Ensure it's above the overlay */
+    }
 
   
     </style>
-
+ <div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+        <p>Are you sure you want to delete this fertility prediction?</p>
+        <button onclick="cancelDelete()">Cancel</button>
+        <button onclick="confirmDelete()">Delete</button>
+    </div>
+</div>
 
     <div class="container">
         <div class="topnav">
@@ -397,15 +424,28 @@ table{
         </table>
     </section>
     <script>
-    // Function to display confirmation popup
-    function confirmDelete(predictionID) {
-        // Display confirmation popup
-        var confirmDelete = confirm("Are you sure you want to delete this fertility prediction?");
-        
-        // If user confirms deletion, redirect to delete_fertility_prediction.php with predictionID parameter
-        if (confirmDelete) {
-            window.location.href = "delete_fertility_prediction.php?id=" + predictionID;
-        }
-    }
+// Function to display confirmation popup
+function confirmDelete(predictionID) {
+    // Redirect to delete_fertility_prediction.php with predictionID parameter
+    window.location.href = "delete_fertility_prediction.php?id=" + predictionID;
+}
+
+// Function to cancel delete operation
+function cancelDelete() {
+    // Hide the overlay and popup
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('popup').style.display = 'none';
+}
+
+// Function to display confirmation popup when delete icon is clicked
+function showConfirmation(predictionID) {
+    // Display the overlay and popup
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('popup').style.display = 'block';
+
+    // Store the predictionID in a hidden input field (if needed)
+    document.getElementById('predictionID').value = predictionID;
+}
+</script>
 </body>
 </html>
