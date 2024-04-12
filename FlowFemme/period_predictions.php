@@ -318,15 +318,28 @@ if ($result) {
         background-color: #05a393; 
     }
 
-    .custom-table {
-        border: 1px solid black; /* Set border width and color */
-        border-collapse: collapse; /* Collapse border spacing */
-        width: 100%; /* Set table width to 100% */
+   
+    table tr {
+        background-color: #f2f2f2; /* Set background color for table rows */
     }
-    .custom-table th, .custom-table td {
-        padding: 10px; /* Set cell padding */
-        border: 1px solid black; /* Set cell border */
+
+    /* Define styles for table header cells */
+    table th {
+        background-color: #07bca3; /* Set background color for table header cells */
+        color: white; /* Set text color for table header cells */
+        padding: 10px; /* Add padding to table header cells */
     }
+
+    /* Define styles for table body */
+    table tbody {
+        color: #333; /* Set text color for table body */
+    }
+
+    /* Define styles for table data cells */
+    table td {
+        padding: 10px; /* Add padding to table data cells */
+    }
+
   
     </style>
 
