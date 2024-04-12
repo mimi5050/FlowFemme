@@ -585,7 +585,7 @@ if ($result) {
                     echo '<td>' . $row['NextPeriodEndDate'] . '</td>';
                     // Action buttons for each row
                     echo '<td>';
-                    echo "<button onclick=\"openUpdatePopup('" . $row['PredictionID'] . "','" . $row['LastPeriodDate'] . "','" . $row['AverageCycleLength'] . "','" . $row['AveragePeriodLength'] . "')\" class='action-button'>Edit</button>";
+                    echo '<button onclick="openUpdatePopup(' . $row['PredictionID'] . ', \'' . $row['LastPeriodDate'] . '\', \'' . $row['AverageCycleLength'] . '\', \'' . $row['AveragePeriodLength'] . '\')" class="action-button">Edit</button>';
                     echo '<button class="action-button" onclick="deletePrediction(' . $row['PredictionID'] . ')">Delete</button>';
                     echo '</td>';
                     echo '</tr>';
@@ -657,17 +657,17 @@ if ($result) {
     }
 
 
-      // Function to open the update popup
-function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
-    // Populate form fields with existing data
-    document.getElementById("prediction_id").value = predictionID;
-    document.getElementById("editLastPeriodDate").value = lastPeriodDate;
-    document.getElementById("editCycleLength").value = cycleLength;
-    document.getElementById("editAveragePeriodLength").value = averagePeriodLength;
-    
-    // Show the popup
-    document.getElementById("editPopup").style.display = "block"; // Change this line
-}
+      function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
+      // Populate form fields with existing data
+      document.getElementById("prediction_id").value = predictionID;
+      document.getElementById("editLastPeriodDate").value = lastPeriodDate;
+      document.getElementById("editCycleLength").value = cycleLength;
+      document.getElementById("editAveragePeriodLength").value = averagePeriodLength;
+      
+      // Show the popup
+      document.getElementById("editPopup").style.display = "block"; // Change this line
+  }
+
 
     // Function to close the update popup
     function closeUpdatePopup() {
