@@ -657,7 +657,7 @@ if ($result) {
     }
 
 
-      function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
+        function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
       // Populate form fields with existing data
       document.getElementById("prediction_id").value = predictionID;
       document.getElementById("editLastPeriodDate").value = lastPeriodDate;
@@ -665,15 +665,15 @@ if ($result) {
       document.getElementById("editAveragePeriodLength").value = averagePeriodLength;
       
       // Show the popup
-      document.getElementById("editPopup").style.display = "block"; // Change this line
-  }
-
+      document.getElementById("popup").style.display = "block";
+    }
 
     // Function to close the update popup
     function closeUpdatePopup() {
-        // Hide the popup
-        document.getElementById("updatePopup").style.display = "none";
+      // Hide the popup
+      document.getElementById("popup").style.display = "none";
     }
+
 
     // Function to save changes using AJAX
     function saveChanges() {
