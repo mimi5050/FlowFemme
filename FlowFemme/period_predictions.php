@@ -382,120 +382,6 @@ if ($result) {
     .popup button:hover {
         background-color: #05a393;
     }
-
-    .popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 400px;
-    width: 100%;
-    z-index: 1000;
-}
-
-.popup div {
-    margin-bottom: 20px;
-}
-
-.popup button {
-    background-color: #07bca3;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 0 10px;
-}
-
-.popup button:hover {
-    background-color: #05a393;
-}
-
-.popup label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.popup input[type="date"],
-.popup input[type="number"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.popup input[type="number"]::placeholder {
-    color: #999;
-}
-
-.popup small {
-    color: #888;
-}
-#editPopup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.popup-content {
-    background-color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 80%; /* Adjust width as needed */
-    max-width: 400px; /* Adjust max-width as needed */
-    color: #333; 
-    font-family: Arial, sans-serif; 
-}
-
-.popup-content input,
-.popup-content textarea {
-    width: 100%; /* Adjust width as needed */
-    padding: 10px;
-    margin: 10px 0; /* Adjust margin as needed */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.popup-content button {
-    background-color: #07bca3;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 45%; /* Adjust width as needed */
-    padding: 10px;
-    margin-right: 5%; 
-    margin-top: 10px; /* Adjust margin as needed */
-    text-align: center;
-}
-
-.popup-content button.close {
-    background-color: #ccc;
-    color: #333;
-    width: 45%; 
-    padding: 10px;
-    margin-right: 0;
-    margin-left: 5%; /* Adjust margin as needed */
-}
-
   
     </style>
 
@@ -585,7 +471,7 @@ if ($result) {
                     echo '<td>' . $row['NextPeriodEndDate'] . '</td>';
                     // Action buttons for each row
                     echo '<td>';
-                    echo '<button onclick="openUpdatePopup(' . $row['PredictionID'] . ', \'' . $row['LastPeriodDate'] . '\', \'' . $row['AverageCycleLength'] . '\', \'' . $row['AveragePeriodLength'] . '\')" class="action-button">Edit</button>';
+                    echo '<button class="action-button" onclick="updatePrediction(' . $row['PredictionID'] . ')">Update</button>';
                     echo '<button class="action-button" onclick="deletePrediction(' . $row['PredictionID'] . ')">Delete</button>';
                     echo '</td>';
                     echo '</tr>';
@@ -655,52 +541,8 @@ if ($result) {
         // Add the popup to the body
         document.body.appendChild(popup);
     }
-
-
-        function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
-      // Populate form fields with existing data
-      document.getElementById("prediction_id").value = predictionID;
-      document.getElementById("editLastPeriodDate").value = lastPeriodDate;
-      document.getElementById("editCycleLength").value = cycleLength;
-      document.getElementById("editAveragePeriodLength").value = averagePeriodLength;
-      
-      // Show the popup
-      document.getElementById("popup").style.display = "block";
-    }
-
-    // Function to close the update popup
-    function closeUpdatePopup() {
-      // Hide the popup
-      document.getElementById("popup").style.display = "none";
-    }
-
-
-    // Function to save changes using AJAX
-    function saveChanges() {
-        // Get form data
-        var formData = new FormData(document.getElementById("editForm"));
-
-        // Send AJAX request
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "update_prediction.php", true);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Check if the update was successful
-                if (xhr.responseText.trim() === "success") {
-                    // Reload the page to reflect changes
-                    location.reload();
-                } else {
-                    alert("Error updating record: " + xhr.responseText);
-                }
-            } else {
-                alert("Error: " + xhr.statusText);
-            }
-        };
-        xhr.onerror = function () {
-            alert("Network Error");
-        };
-        xhr.send(formData);
-    }
+``
+</script>
 
 </body>
 </html>
