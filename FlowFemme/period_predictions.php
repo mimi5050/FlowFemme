@@ -313,6 +313,7 @@ if ($result) {
         transition: background-color 0.3s;
         margin-right: 5px;
         font-size:12px;
+        margin: left 0;
     }
 
     .action-button:hover {
