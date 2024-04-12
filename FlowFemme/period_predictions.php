@@ -321,6 +321,7 @@ if ($result) {
     table{
       width:80%;
       margin-left:20%;
+      font-size:14px;
     
     }
    
