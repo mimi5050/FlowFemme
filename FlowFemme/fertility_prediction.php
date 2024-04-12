@@ -326,6 +326,38 @@ table{
     </div>
 </div>
 
+<div class="overlay" id="editOverlay">
+    <div class="popup" id="editPopup">
+        <p>Edit Fertility Prediction</p>
+        <!-- Hidden input field for prediction ID -->
+        <input type="hidden" id="editPredictionID" name="editPredictionID">
+        <!-- Input fields for editing -->
+        <div class="form-group">
+            <label for="editLastPeriodDate">Last Period Date:</label>
+            <input type="date" id="editLastPeriodDate" name="editLastPeriodDate" required>
+        </div>
+        <div class="form-group">
+            <label for="editCycleLength">Average Cycle Length (in days):</label>
+            <input type="number" id="editCycleLength" name="editCycleLength" required>
+        </div>
+        <div class="form-group">
+            <label for="editPeriodLength">Average Period Length (in days):</label>
+            <input type="number" id="editPeriodLength" name="editPeriodLength" required>
+        </div>
+        <div class="form-group">
+            <label for="editFertileStartDate">Fertile Start Date:</label>
+            <input type="date" id="editFertileStartDate" name="editFertileStartDate" required>
+        </div>
+        <div class="form-group">
+            <label for="editFertileEndDate">Fertile End Date:</label>
+            <input type="date" id="editFertileEndDate" name="editFertileEndDate" required>
+        </div>
+        <!-- Buttons for canceling or saving changes -->
+        <button onclick="cancelEdit()">Cancel</button>
+        <button onclick="updatePrediction()">Save Changes</button>
+    </div>
+</div>
+
 
     <div class="container">
         <div class="topnav">
@@ -448,6 +480,72 @@ function deletePrediction() {
     window.location.href = "delete_fertility_prediction.php?id=" + predictionID;
 }
 
+// Function to display edit popup with existing data
+function showEditPopup(predictionID, lastPeriodDate, cycleLength, periodLength, fertileStartDate, fertileEndDate) {
+    // Display the overlay and popup
+    document.getElementById('editOverlay').style.display = 'flex';
+    document.getElementById('editPopup').style.display = 'block';
+
+    // Populate input fields with existing data
+    document.getElementById('editPredictionID').value = predictionID;
+    document.getElementById('editLastPeriodDate').value = lastPeriodDate;
+    document.getElementById('editCycleLength').value = cycleLength;
+    document.getElementById('editPeriodLength').value = periodLength;
+    document.getElementById('editFertileStartDate').value = fertileStartDate;
+    document.getElementById('editFertileEndDate').value = fertileEndDate;
+}
+
+// Function to cancel edit operation
+function cancelEdit() {
+    // Hide the overlay and popup
+    document.getElementById('editOverlay').style.display = 'none';
+    document.getElementById('editPopup').style.display = 'none';
+}
+
+// Function to update fertility prediction
+function updatePrediction() {
+    // Get the predictionID and edited data from input fields
+    var predictionID = document.getElementById('editPredictionID').value;
+    var lastPeriodDate = document.getElementById('editLastPeriodDate').value;
+    var cycleLength = document.getElementById('editCycleLength').value;
+    var periodLength = document.getElementById('editPeriodLength').value;
+    var fertileStartDate = document.getElementById('editFertileStartDate').value;
+    var fertileEndDate = document.getElementById('editFertileEndDate').value;
+
+    // Prepare data to send to the server for updating
+    var data = {
+        predictionID: predictionID,
+        lastPeriodDate: lastPeriodDate,
+        cycleLength: cycleLength,
+        periodLength: periodLength,
+        fertileStartDate: fertileStartDate,
+        fertileEndDate: fertileEndDate
+    };
+
+    // Send the data to the server using AJAX or fetch API
+    // Example using fetch API
+    fetch('update_fertility_prediction.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Update successful, hide the edit popup
+            cancelEdit();
+            // Optionally, you can reload the table to reflect the changes immediately
+            // window.location.reload();
+        } else {
+            // Error handling
+            console.error('Failed to update fertility prediction');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
 </script>
 </body>
