@@ -541,6 +541,24 @@ if ($result) {
         // Add the popup to the body
         document.body.appendChild(popup);
     }
+
+
+    function updatePrediction(predictionID) {
+        // Fetch the prediction data using AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "fetch_prediction_data.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Display the fetched data in the popup
+                document.getElementById("updatePopupContent").innerHTML = xhr.responseText;
+                // Show the popup
+                document.getElementById("updatePopup").style.display = "block";
+            }
+        };
+        // Send the prediction ID as data in the POST request
+        xhr.send("prediction_id=" + predictionID);
+    }
 </script>
 
 </body>
