@@ -419,7 +419,7 @@ if ($result) {
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
-    margin-right:20px;
+    margin-right:200px;
 }
 
 .update-popup button[type="submit"],
