@@ -371,63 +371,59 @@ if ($result) {
             </div>
             <button type="submit">Predict Period</button>
         </form>
-        <?php
+        </div>
+        <div style="margin-top: 30px;">
+    <h2 style="color: #07bca3;">Period Predictions</h2>
+    <table cellpadding="10" style="border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>Last Period Date</th>
+                <th>Average Cycle Length</th>
+                <th>Average Period Length</th>
+                <th>Next Period Start Date</th>
+                <th>Next Period End Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Fetch period prediction data from the database
+            $query = "SELECT * FROM periodpredictions WHERE UserID = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $userID);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        // Fetch period prediction data from the database
-        $query = "SELECT * FROM periodpredictions WHERE UserID = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $userID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // Check if there is data available
-        if ($result->num_rows > 0) {
-            echo '<div style="margin-top: 30px;">';
-            echo '<h2>Period Predictions</h2>'; // Title for the period prediction table
-            echo '<table border="1" cellpadding="10" style="border-collapse: collapse;">';
-            echo '<thead>';
-            echo '<tr>';
-            echo '<th>Last Period Date</th>';
-            echo '<th>Average Cycle Length</th>';
-            echo '<th>Average Period Length</th>';
-            echo '<th>Next Period Start Date</th>';
-            echo '<th>Next Period End Date</th>';
-            echo '<th>Actions</th>'; // Column for action buttons
-            echo '</tr>';
-            echo '</thead>';
-            echo '<tbody>';
-            // Loop through each row of the result set
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>';
-                echo '<td>' . $row['LastPeriodDate'] . '</td>';
-                echo '<td>' . $row['AverageCycleLength'] . '</td>';
-                echo '<td>' . $row['AveragePeriodLength'] . '</td>';
-                echo '<td>' . $row['NextPeriodStartDate'] . '</td>';
-                echo '<td>' . $row['NextPeriodEndDate'] . '</td>';
-                // Action buttons for each row
-                echo '<td>';
-                echo '<button onclick="updatePrediction(' . $row['PredictionID'] . ')">Update</button>';
-                echo '<button onclick="deletePrediction(' . $row['PredictionID'] . ')">Delete</button>';
-                echo '</td>';
-                echo '</tr>';
+            // Check if there is data available
+            if ($result->num_rows > 0) {
+                // Loop through each row of the result set
+                while ($row = $result->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . $row['LastPeriodDate'] . '</td>';
+                    echo '<td>' . $row['AverageCycleLength'] . '</td>';
+                    echo '<td>' . $row['AveragePeriodLength'] . '</td>';
+                    echo '<td>' . $row['NextPeriodStartDate'] . '</td>';
+                    echo '<td>' . $row['NextPeriodEndDate'] . '</td>';
+                    // Action buttons for each row
+                    echo '<td>';
+                    echo '<button class="action-button" onclick="updatePrediction(' . $row['PredictionID'] . ')">Update</button>';
+                    echo '<button class="action-button" onclick="deletePrediction(' . $row['PredictionID'] . ')">Delete</button>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+            } else {
+                // If no data found, display a message
+                echo '<tr><td colspan="6">No period predictions available.</td></tr>';
             }
-            echo '</tbody>';
-            echo '</table>';
-            echo '</div>';
-        } else {
-            // If no data found, display a message
-            echo '<div style="margin-top: 30px;">';
-            echo '<h2>Period Predictions</h2>'; // Title for the period prediction table
-            echo '<p>No period predictions available.</p>';
-            echo '</div>';
-        }
 
-        // Close the prepared statement and database connection
-        $stmt->close();
-        $conn->close();
-        ?>
+            // Close the prepared statement and database connection
+            $stmt->close();
+            $conn->close();
+            ?>
+        </tbody>
+    </table>
+</div>
 
-    </div>
 </main>
 </body>
 </html>
