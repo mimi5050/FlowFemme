@@ -444,8 +444,8 @@ table{
                             echo "<td>" . $row["FertileEndDate"] . "</td>";
                             // Add action buttons
                             echo "<td>";
-                            echo "<a href='update_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-edit'></i></a>";
-                            echo "<a href='javascript:void(0)' onclick='showConfirmation(" . $row["PredictionID"] . ")'><i class='fas fa-trash'></i></a>"; // Here's the modification
+                            echo "<a href='javascript:void(0)' onclick='showEditPopup(" . $row["PredictionID"] . ", \"" . $row["LastPeriodDate"] . "\", " . $row["AverageCycleLength"] . ", " . $row["AveragePeriodLength"] . ", \"" . $row["FertileStartDate"] . "\", \"" . $row["FertileEndDate"] . "\")'><i class='fas fa-edit'></i></a>";
+                            echo "<a href='javascript:void(0)' onclick='showConfirmation(" . $row["PredictionID"] . ")'><i class='fas fa-trash'></i></a>";
                             echo "</td>";
                             echo "</tr>";
                         }
@@ -502,15 +502,20 @@ function cancelEdit() {
     document.getElementById('editPopup').style.display = 'none';
 }
 
-// Function to update fertility prediction
-function updatePrediction() {
-    // Get the predictionID and edited data from input fields
-    var predictionID = document.getElementById('editPredictionID').value;
-    var lastPeriodDate = document.getElementById('editLastPeriodDate').value;
-    var cycleLength = document.getElementById('editCycleLength').value;
-    var periodLength = document.getElementById('editPeriodLength').value;
-    var fertileStartDate = document.getElementById('editFertileStartDate').value;
-    var fertileEndDate = document.getElementById('editFertileEndDate').value;
+/// Function to display edit popup with existing data
+function showEditPopup(predictionID, lastPeriodDate, cycleLength, periodLength, fertileStartDate, fertileEndDate) {
+    // Display the overlay and popup
+    document.getElementById('editOverlay').style.display = 'flex';
+    document.getElementById('editPopup').style.display = 'block';
+
+    // Populate input fields with existing data
+    document.getElementById('editPredictionID').value = predictionID;
+    document.getElementById('editLastPeriodDate').value = lastPeriodDate;
+    document.getElementById('editCycleLength').value = cycleLength;
+    document.getElementById('editPeriodLength').value = periodLength;
+    document.getElementById('editFertileStartDate').value = fertileStartDate;
+    document.getElementById('editFertileEndDate').value = fertileEndDate;
+}
 
     // Prepare data to send to the server for updating
     var data = {
