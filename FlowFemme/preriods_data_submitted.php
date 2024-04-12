@@ -151,7 +151,6 @@ if ($result) {
             <h2>Prediction for Menstrual Cycle</h2>
             <p>Based on the submitted data, we predict the following trends for upcoming menstrual cycles:</p>
             <ul>
-                <li><span class="icon icon-1"></span> Regular cycle length: <span class="highlight">
 
                 <?php
                     // Query to fetch the start date of the period for the user
@@ -170,18 +169,17 @@ if ($result) {
                         $regularCycleLength = $lastPeriodDate->diff($nextPeriodStartDate)->days;
 
                         // Display regular cycle length
-                        echo '<li><span class="icon icon-4"></span> Regular cycle length: <span class="highlight">';
+                        echo '<li><span class="icon-1"></span> Regular cycle length: <span class="highlight">';
                         echo $regularCycleLength . ' days';
                         echo '</span></li>';
                     } else {
-                        echo "<li><span class='icon icon-4'></span> Regular cycle length: <span class='highlight'>Not available</span></li>";
+                        echo "<li><span class='icon-1'></span> Regular cycle length: <span class='highlight'>Not available</span></li>";
                     }
 
                     $stmt->close();
                     ?>
 
                 </span></li>
-                <li><span class="icon icon-2"></span> Expected ovulation period: <span class="highlight">
 
                 <?php
                     // Query to fetch the average cycle length for the user
@@ -199,11 +197,11 @@ if ($result) {
                         $ovulationDay = floor($averageCycleLength / 2);
 
                         // Display expected ovulation period
-                        echo '<li><span class="icon icon-5"></span> Expected ovulation period: <span class="highlight">';
+                        echo '<li><span class="icon-2"></span> Expected ovulation period: <span class="highlight">';
                         echo 'Days ' . ($ovulationDay - 3) . '-' . ($ovulationDay + 3); // Ovulation usually occurs around day 14, so we subtract and add 3 days for the ovulation period
                         echo '</span></li>';
                     } else {
-                        echo "<li><span class='icon icon-5'></span> Expected ovulation period: <span class='highlight'>Not available</span></li>";
+                        echo "<li><span class='icon-2'></span> Expected ovulation period: <span class='highlight'>Not available</span></li>";
                     }
 
                     $stmt->close();
@@ -211,53 +209,52 @@ if ($result) {
 
 
                 </span></li>
-                <li><span class="icon icon-3"></span> Potential symptoms expected: <span class="highlight">
-                <?php
-// Query to fetch the symptoms recorded for the user
-$query = "SELECT SymptomName, Severity, Frequency FROM symptoms WHERE UserID = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $userID);
-$stmt->execute();
-$result = $stmt->get_result();
+                    <?php
+                        // Query to fetch the symptoms recorded for the user
+                        $query = "SELECT SymptomName, Severity, Frequency FROM symptoms WHERE UserID = ?";
+                        $stmt = $conn->prepare($query);
+                        $stmt->bind_param("i", $userID);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    // Initialize variables to store potential symptoms and their severity
-    $potentialSymptoms = [];
-    $potentialSeverity = 0;
+                        if ($result->num_rows > 0) {
+                            // Initialize variables to store potential symptoms and their severity
+                            $potentialSymptoms = [];
+                            $potentialSeverity = 0;
 
-    // Loop through each recorded symptom
-    while ($row = $result->fetch_assoc()) {
-        $symptomName = $row['SymptomName'];
-        $severity = $row['Severity'];
-        $frequency = $row['Frequency'];
+                            // Loop through each recorded symptom
+                            while ($row = $result->fetch_assoc()) {
+                                $symptomName = $row['SymptomName'];
+                                $severity = $row['Severity'];
+                                $frequency = $row['Frequency'];
 
-        // Determine if the symptom is expected based on severity and frequency
-        if ($severity > 5 && $frequency > 10) {
-            // Add the symptom to the list of potential symptoms
-            $potentialSymptoms[] = $symptomName;
-            // Aggregate severity to calculate the overall severity of potential symptoms
-            $potentialSeverity += $severity;
-        }
-    }
+                                // Determine if the symptom is expected based on severity and frequency
+                                if ($severity > 5 && $frequency > 10) {
+                                    // Add the symptom to the list of potential symptoms
+                                    $potentialSymptoms[] = $symptomName;
+                                    // Aggregate severity to calculate the overall severity of potential symptoms
+                                    $potentialSeverity += $severity;
+                                }
+                            }
 
-    // Determine the overall severity of potential symptoms
-    $overallSeverity = count($potentialSymptoms) > 0 ? $potentialSeverity / count($potentialSymptoms) : 0;
+                            // Determine the overall severity of potential symptoms
+                            $overallSeverity = count($potentialSymptoms) > 0 ? $potentialSeverity / count($potentialSymptoms) : 0;
 
-    // Display potential symptoms and their overall severity
-    echo "<li><span class='icon icon-6'></span> Potential symptoms expected: ";
-    if (count($potentialSymptoms) > 0) {
-        echo implode(", ", $potentialSymptoms);
-        echo " (Severity: " . round($overallSeverity, 2) . ")";
-    } else {
-        echo "None";
-    }
-    echo "</li>";
-} else {
-    echo "<li><span class='icon icon-6'></span> Potential symptoms expected: Not available</li>";
-}
+                            // Display potential symptoms and their overall severity
+                            echo "<li><span class='icon-3'></span> Potential symptoms expected: ";
+                            if (count($potentialSymptoms) > 0) {
+                                echo implode(", ", $potentialSymptoms);
+                                echo " (Severity: " . round($overallSeverity, 2) . ")";
+                            } else {
+                                echo "None";
+                            }
+                            echo "</li>";
+                        } else {
+                            echo "<li><span class='icon-3'></span> Potential symptoms expected: Not available</li>";
+                        }
 
-$stmt->close();
-?>
+                        $stmt->close();
+                        ?>
 
                 </span></li>
             </ul>
