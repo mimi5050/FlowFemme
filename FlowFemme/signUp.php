@@ -82,11 +82,12 @@
     <div class="signup-container">
         <h2>Create an Account</h2>
         <form id="signup-form" action="signUp_backend.php" method="post">
-            <input type="text" name="username" id="username" placeholder="Username" required>
-            <input type="email" name="email" id="email" placeholder="Email" required>
-            <input type="password" name="password" id="password" placeholder="Password" required>
+            <input type="text" name="username" id="username" placeholder="Username" pattern="[a-zA-Z0-9_-]{3,16}" title="Username must be 3-16 characters long and can contain letters, numbers, underscores, and hyphens." required>
+            <input type="email" name="email" id="email" placeholder="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address." required>
+            <input type="password" name="password" id="password" placeholder="Password" pattern=".{8,}" title="Password must be at least 8 characters long." required>
             <button type="submit">Sign Up</button>
         </form>
+
         <p>Already have an account? <a href="login.php">Log in</a></p>
     </div>
 </body>
