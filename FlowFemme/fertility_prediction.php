@@ -352,8 +352,6 @@ table{
         <table>
             <thead>
                 <tr>
-                    <th>Prediction ID</th>
-                    <th>User ID</th>
                     <th>Last Period Date</th>
                     <th>Average Cycle Length</th>
                     <th>Average Period Length</th>
@@ -376,8 +374,6 @@ table{
                     // Output data of each row
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>" . $row["PredictionID"] . "</td>";
-                        echo "<td>" . $row["UserID"] . "</td>";
                         echo "<td>" . $row["LastPeriodDate"] . "</td>";
                         echo "<td>" . $row["AverageCycleLength"] . "</td>";
                         echo "<td>" . $row["AveragePeriodLength"] . "</td>";
