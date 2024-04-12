@@ -370,7 +370,7 @@ if ($result) {
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
         width:30%;
-        height:10%;
+        height:30%;
         text-align: center;
         z-index: 1000;
        
