@@ -1,7 +1,3 @@
-<?php
-// Start session
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,6 +89,11 @@ session_start();
         .right-image {
             right: 200px; 
         }
+
+        
+        .error-message {
+            color: red; 
+        }
     </style>
 </head>
 <body>
@@ -105,7 +106,7 @@ session_start();
             <?php
             // Check if error message exists
             if (isset($_SESSION["error_message"])) {
-                // Display error message
+                // Display error message with error-message class
                 echo "<p class='error-message'>" . $_SESSION["error_message"] . "</p>";
                 // Remove error message from session
                 unset($_SESSION["error_message"]);
