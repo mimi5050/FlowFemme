@@ -502,65 +502,57 @@ if ($result) {
 
 </main>
 <script>
-      function deletePrediction(predictionID) {
-          // Create overlay element
-          var overlay = document.createElement('div');
-          overlay.classList.add('overlay');
-          document.body.appendChild(overlay);
+    function deletePrediction(predictionID) {
+        // Create a div element for the popup
+        var popup = document.createElement('div');
+        popup.classList.add('popup');
 
-          // Create a div element for the popup
-          var popup = document.createElement('div');
-          popup.classList.add('popup');
+        // Create a confirmation message
+        var message = document.createElement('div');
+        message.innerHTML = "Are you sure you want to delete this prediction?";
+        popup.appendChild(message);
 
-          // Create a confirmation message
-          var message = document.createElement('div');
-          message.innerHTML = "Are you sure you want to delete this prediction?";
-          popup.appendChild(message);
+        // Create buttons for confirmation and cancellation
+        var confirmButton = document.createElement('button');
+        confirmButton.innerText = "Confirm";
+        confirmButton.onclick = function() {
+            // Send an AJAX request to the server to delete the prediction
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "delete_prediction.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Parse the JSON response
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        // If deletion was successful, reload the page to reflect changes
+                        location.reload();
+                    } else {
+                        // If an error occurred, display an error message
+                        alert("Failed to delete prediction: " + response.error);
+                    }
+                }
+            };
+            // Send the prediction ID as data in the POST request
+            xhr.send("prediction_id=" + predictionID);
 
-          // Create buttons for confirmation and cancellation
-          var confirmButton = document.createElement('button');
-          confirmButton.innerText = "Confirm";
-          confirmButton.onclick = function() {
-              // Send an AJAX request to the server to delete the prediction
-              var xhr = new XMLHttpRequest();
-              xhr.open("POST", "delete_prediction.php", true);
-              xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-              xhr.onreadystatechange = function() {
-                  if (xhr.readyState === 4 && xhr.status === 200) {
-                      // Parse the JSON response
-                      var response = JSON.parse(xhr.responseText);
-                      if (response.success) {
-                          // If deletion was successful, reload the page to reflect changes
-                          location.reload();
-                      } else {
-                          // If an error occurred, display an error message
-                          alert("Failed to delete prediction: " + response.error);
-                      }
-                  }
-              };
-              // Send the prediction ID as data in the POST request
-              xhr.send("prediction_id=" + predictionID);
+            // Remove the popup from the DOM
+            document.body.removeChild(popup);
+        };
+        popup.appendChild(confirmButton);
 
-              // Remove the popup and overlay from the DOM
-              document.body.removeChild(popup);
-              document.body.removeChild(overlay);
-          };
-          popup.appendChild(confirmButton);
+        var cancelButton = document.createElement('button');
+        cancelButton.innerText = "Cancel";
+        cancelButton.style.backgroundColor = "#ccc"; 
+        cancelButton.onclick = function() {
+            // Remove the popup from the DOM
+            document.body.removeChild(popup);
+        };
+        popup.appendChild(cancelButton);
 
-          var cancelButton = document.createElement('button');
-          cancelButton.innerText = "Cancel";
-          cancelButton.onclick = function() {
-              // Remove the popup and overlay from the DOM
-              document.body.removeChild(popup);
-              document.body.removeChild(overlay);
-          };
-          popup.appendChild(cancelButton);
-
-          // Add the popup to the body
-          document.body.appendChild(popup);
-      }
-
-``
+        // Add the popup to the body
+        document.body.appendChild(popup);
+    }
 </script>
 
 </body>
