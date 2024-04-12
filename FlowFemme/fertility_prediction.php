@@ -502,20 +502,15 @@ function cancelEdit() {
     document.getElementById('editPopup').style.display = 'none';
 }
 
-/// Function to display edit popup with existing data
-function showEditPopup(predictionID, lastPeriodDate, cycleLength, periodLength, fertileStartDate, fertileEndDate) {
-    // Display the overlay and popup
-    document.getElementById('editOverlay').style.display = 'flex';
-    document.getElementById('editPopup').style.display = 'block';
-
-    // Populate input fields with existing data
-    document.getElementById('editPredictionID').value = predictionID;
-    document.getElementById('editLastPeriodDate').value = lastPeriodDate;
-    document.getElementById('editCycleLength').value = cycleLength;
-    document.getElementById('editPeriodLength').value = periodLength;
-    document.getElementById('editFertileStartDate').value = fertileStartDate;
-    document.getElementById('editFertileEndDate').value = fertileEndDate;
-}
+// Function to update fertility prediction
+function updatePrediction() {
+    // Get the updated data from the form fields
+    var predictionID = document.getElementById('editPredictionID').value;
+    var lastPeriodDate = document.getElementById('editLastPeriodDate').value;
+    var cycleLength = document.getElementById('editCycleLength').value;
+    var periodLength = document.getElementById('editPeriodLength').value;
+    var fertileStartDate = document.getElementById('editFertileStartDate').value;
+    var fertileEndDate = document.getElementById('editFertileEndDate').value;
 
     // Prepare data to send to the server for updating
     var data = {
@@ -527,8 +522,7 @@ function showEditPopup(predictionID, lastPeriodDate, cycleLength, periodLength, 
         fertileEndDate: fertileEndDate
     };
 
-    // Send the data to the server using AJAX or fetch API
-    // Example using fetch API
+    // Send the data to the server using AJAX
     fetch('update_fertility_prediction.php', {
         method: 'POST',
         headers: {
@@ -541,7 +535,7 @@ function showEditPopup(predictionID, lastPeriodDate, cycleLength, periodLength, 
             // Update successful, hide the edit popup
             cancelEdit();
             // Optionally, you can reload the table to reflect the changes immediately
-            // window.location.reload();
+            window.location.reload();
         } else {
             // Error handling
             console.error('Failed to update fertility prediction');
