@@ -349,7 +349,7 @@ if ($result) {
         padding: 10px; 
     }
 
-     /* Styling for the popup */
+     
      .overlay {
         position: fixed;
         top: 0;
@@ -357,7 +357,7 @@ if ($result) {
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999; /* Ensure it's above other elements */
+        z-index: 999;
     }
 
      .popup {
@@ -393,6 +393,16 @@ if ($result) {
     .popup button:hover {
         background-color: #05a393;
     }
+    .update-popup {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 300px;
+    text-align: center;
+    z-index: 1000;
+}
+
   
     </style>
 
@@ -571,6 +581,7 @@ if ($result) {
     // Create a div element for the popup
     var popup = document.createElement('div');
     popup.classList.add('popup');
+    popup.classList.add('update-popup'); // Add a class for styling update popup
 
     // Create input fields for updating the prediction data
     var form = document.createElement('form');
@@ -656,6 +667,7 @@ if ($result) {
     document.body.appendChild(overlay);
     document.body.appendChild(popup);
 }
+
 </script>
 </body>
 </html>
