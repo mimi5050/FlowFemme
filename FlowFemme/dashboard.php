@@ -570,40 +570,38 @@ if ($result) {
             <div class="card">
             <h3><i class="fas fa-heartbeat"></i> Ovulation Date</h3>
             <?php
-          // Assuming you already have a database connection
-
-          // Query to fetch the start date of the period for the user
-          $query = "SELECT LastPeriodDate FROM periodpredictions WHERE UserID = ?";
-          $stmt = $conn->prepare($query);
-          $stmt->bind_param("i", $userID);
-          $stmt->execute();
-          $result = $stmt->get_result();
-
-          if ($result->num_rows > 0) {
-              $row = $result->fetch_assoc();
-              $lastPeriodDate = new DateTime($row['LastPeriodDate']);
-
-              // Calculate ovulation date
-              $ovulationDate = clone $lastPeriodDate;
-              $ovulationDate->add(new DateInterval("P14D"));
-
-              // Display ovulation date
-              echo "<p><strong>" . $ovulationDate->format('Y-m-d') . "</strong></p>";
-          } else {
-              echo "<p>No data found for the user.</p>";
-          }
-
-          $stmt->close();
-          ?>
+              // Query to fetch the start date of the period for the user
+              $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+              $stmt = $conn->prepare($query);
+              $stmt->bind_param("i", $userID);
+              $stmt->execute();
+              $result = $stmt->get_result();
+              
+              if ($result->num_rows > 0) {
+                  $row = $result->fetch_assoc();
+                  $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                  $averageCycleLength = $row['AverageCycleLength'];
+              
+                  // Calculate ovulation date
+                  $ovulationDate = clone $lastPeriodDate;
+                  $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); // Ovulation occurs around half the average cycle length
+              
+                  // Display ovulation date
+                  echo "<p><strong>" . $ovulationDate->format('Y-m-d') . "</strong></p>";
+              } else {
+                  echo "<p>No data found for the user.</p>";
+              }
+              
+              $stmt->close();
+              ?>
+              
 
         </div>
         <div class="card">
             <h3><i class="fas fa-baby"></i> Probability of Pregnancy</p>
             <?php
-            // Assuming you already have a database connection
-
             // Query to fetch the start date of the period for the user
-            $query = "SELECT LastPeriodDate FROM periodpredictions WHERE UserID = ?";
+            $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("i", $userID);
             $stmt->execute();
@@ -612,10 +610,11 @@ if ($result) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                $averageCycleLength = $row['AverageCycleLength'];
 
                 // Calculate ovulation date
                 $ovulationDate = clone $lastPeriodDate;
-                $ovulationDate->add(new DateInterval("P14D"));
+                $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); // Ovulation occurs around half the average cycle length
 
                 // Calculate the number of days since ovulation
                 $now = new DateTime();
@@ -623,15 +622,15 @@ if ($result) {
                 $countdown = $interval->days;
 
                 // If the countdown is negative or exceeds the day of ovulation, set it to 0
-                if ($countdown < 0 || $countdown > 14) {
+                if ($countdown < 0 || $countdown > ($averageCycleLength / 2)) {
                     $countdown = 0;
                 } else {
                     // If the countdown is within the ovulation window, calculate the countdown from the ovulation day
-                    $countdown = 14 - $countdown;
+                    $countdown = ($averageCycleLength / 2) - $countdown;
                 }
 
                 // Calculate the probability of pregnancy
-                $probability = ($countdown / 14) * 100;
+                $probability = ($countdown / ($averageCycleLength / 2)) * 100;
 
                 // Display the probability of pregnancy
                 echo "<p><strong>" . round($probability, 2) . "%</strong></p>";
@@ -642,91 +641,88 @@ if ($result) {
             $stmt->close();
             ?>
 
-
         </div>
         <div class="card">
             <h3><i class="fas fa-hourglass-half"></i> Countdown to Ovulation</h3>
+            
             <?php
+                  // Query to fetch the start date of the period for the user
+                  $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+                  $stmt = $conn->prepare($query);
+                  $stmt->bind_param("i", $userID);
+                  $stmt->execute();
+                  $result = $stmt->get_result();
 
+                  if ($result->num_rows > 0) {
+                      $row = $result->fetch_assoc();
+                      $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                      $averageCycleLength = $row['AverageCycleLength'];
 
-            // Query to fetch the start date of the period for the user
-            $query = "SELECT LastPeriodDate FROM periodpredictions WHERE UserID = ?";
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param("i", $userID);
-            $stmt->execute();
-            $result = $stmt->get_result();
+                      // Calculate ovulation date
+                      $ovulationDate = clone $lastPeriodDate;
+                      $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); // Ovulation occurs around half the average cycle length
 
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                      // Calculate countdown to ovulation
+                      $now = new DateTime();
+                      $interval = $now->diff($ovulationDate);
+                      $countdown = $interval->days;
 
-                // Calculate ovulation date
-                $ovulationDate = clone $lastPeriodDate;
-                $ovulationDate->add(new DateInterval("P14D"));
+                      // If the countdown is negative or exceeds the day of ovulation, adjust it
+                      if ($countdown < 0 || $countdown > ($averageCycleLength / 2)) {
+                          $countdown = ($averageCycleLength / 2);
+                      }
 
-                // Calculate countdown to ovulation
-                $now = new DateTime();
-                $interval = $now->diff($ovulationDate);
-                $countdown = $interval->days;
+                      // Display countdown to ovulation
+                      echo "<p><strong>" . $countdown . " days</strong></p>";
+                  } else {
+                      echo "<p>No data found for the user.</p>";
+                  }
 
-                // If the countdown is negative or exceeds the day of ovulation, adjust it
-                if ($countdown < 0 || $countdown > 14) {
-                    $countdown = 14;
-                }
-
-                // Display countdown to ovulation
-                echo "<p><strong>" . $countdown . " days</strong></p>";
-            } else {
-                echo "<p>No data found for the user.</p>";
-            }
-
-            $stmt->close();
-            ?>
+                  $stmt->close();
+                  ?>
 
         </div>
         <div class="card">     
             <h3><i class="fas fa-hourglass-start"></i> Countdown to Next Period</h3>
             <?php
-            // Query to fetch NextPeriodStartDate and AverageCycleLength for the user
-            $query = "SELECT NextPeriodStartDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+      // Query to fetch NextPeriodStartDate and AverageCycleLength for the user
+      $query = "SELECT NextPeriodStartDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+      $stmt = $conn->prepare($query);
 
-            $stmt = $conn->prepare($query);
+      if ($stmt) {
+          $stmt->bind_param("i", $userID); // Bind user ID to the query
 
-            if ($stmt) {
-                $stmt->bind_param("i", $userID); // Bind user ID to the query
+          if ($stmt->execute()) {
+              $result = $stmt->get_result();
 
-                if ($stmt->execute()) {
-                    $result = $stmt->get_result();
+              if ($result->num_rows > 0) {
+                  $row = $result->fetch_assoc();
+                  $nextPeriodStartDate = $row['NextPeriodStartDate'];
+                  $averageCycleLength = $row['AverageCycleLength'];
 
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $nextPeriodStartDate = $row['NextPeriodStartDate'];
-                        $averageCycleLength = $row['AverageCycleLength'];
+                  // Calculate countdown to next period
+                  $now = new DateTime();
+                  $nextPeriod = new DateTime($nextPeriodStartDate);
+                  $interval = $now->diff($nextPeriod);
+                  $countdown = $interval->days;
 
-                        // Calculate countdown to next period
-                        $now = new DateTime();
-                        $nextPeriod = new DateTime($nextPeriodStartDate);
-                        $interval = $now->diff($nextPeriod);
-                        $countdown = $interval->days;
+                  // Ensure countdown is within the range of the average cycle length
+                  $countdown = min($countdown, $averageCycleLength);
 
-                        // Ensure countdown is within the range of the average cycle length
-                        $countdown = min($countdown, $averageCycleLength);
+                  // Display countdown within a paragraph tag with labels
+                  echo "<p> <strong>" . $countdown . " days</strong></p>";
+              } else {
+                  echo "No NextPeriodStartDate data found.";
+              }
+          } else {
+              echo "Error executing query: " . $stmt->error;
+          }
 
-                        // Display countdown within a paragraph tag with labels
-                        echo "<p> <strong>" . $countdown . " days</strong></p>";
-                    } else {
-                        echo "No NextPeriodStartDate data found.";
-                    }
-                } else {
-                    echo "Error executing query: " . $stmt->error;
-                }
-
-                $stmt->close();
-            } else {
-                echo "Error preparing statement: " . $conn->error;
-            }
-            ?>
-
+          $stmt->close();
+      } else {
+          echo "Error preparing statement: " . $conn->error;
+      }
+      ?>
 
 
         </div>

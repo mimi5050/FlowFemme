@@ -1,3 +1,51 @@
+<?php
+// Start or resume a session
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['UserID'])) {
+    // Redirect the user to the login page if not logged in
+    header("Location: login.php");
+    exit(); // Stop script execution
+}
+
+// Include connection.php to establish database connection
+include 'connection.php';
+
+// Fetch logged-in user's ID from session
+$userID = $_SESSION['UserID'];
+// Fetch data from periodpredictions table for the logged-in user
+// Initialize an empty array to store the fetched data
+$data = array();
+
+// Query to fetch data from periodpredictions and fertilitypredictions tables for the logged-in user
+$query = "SELECT pp.*, fp.*
+          FROM periodpredictions AS pp
+          LEFT JOIN fertilitypredictions AS fp ON pp.UserID = fp.UserID
+          WHERE pp.UserID = $userID";
+
+// Execute the query
+$result = mysqli_query($conn, $query);
+
+// Check if the query was successful
+if ($result) {
+    // Fetch the rows
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Add the row to the $data array
+        $data[] = $row;
+    }
+
+    // Free result set
+    mysqli_free_result($result);
+} else {
+    // If there's an error with the query
+    echo "Error: " . mysqli_error($conn);
+}
+
+// Now the $data array contains the fetched data from both tables
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,9 +151,105 @@
             <h2>Prediction for Fertility</h2>
             <p>Based on the submitted data, we predict the following trends:</p>
             <ul>
-                <li><span class="icon icon-1"></span> Ovulation expected around: <span class="highlight">Day 14</span></li>
-                <li><span class="icon icon-2"></span> Fertile window: <span class="highlight">Days 10-16</span></li>
-                <li><span class="icon icon-3"></span> Recommended conception timing: <span class="highlight">During fertile window</span></li>
+            <ul>
+                <li><span class="icon icon-1"></span> Ovulation expected around: <span class="highlight">
+                <?php
+                // Query to fetch the start date of the period for the user
+                $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("i", $userID);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                    $averageCycleLength = $row['AverageCycleLength'];
+
+                    // Calculate ovulation date
+                    $ovulationDate = clone $lastPeriodDate;
+                    $ovulationDate->add(new DateInterval("P" . ($averageCycleLength / 2) . "D")); 
+
+                    // Display ovulation date
+                    echo $ovulationDate->format('Y-m-d');
+                } else {
+                    echo "No data found for the user.";
+                }
+
+                $stmt->close();
+                ?>
+
+                </span></li>
+
+                <li><span class="icon icon-2"></span> Fertile window: <span class="highlight">
+                <?php
+                    // Query to fetch the start date of the period for the user
+                    $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("i", $userID);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                        $averageCycleLength = $row['AverageCycleLength'];
+
+                        // Calculate ovulation date
+                        $ovulationDay = floor($averageCycleLength / 2);
+                        $ovulationDate = clone $lastPeriodDate;
+                        $ovulationDate->add(new DateInterval("P" . $ovulationDay . "D"));
+
+                        // Calculate fertile window
+                        $fertileWindowStart = clone $ovulationDate;
+                        $fertileWindowStart->sub(new DateInterval("P6D")); // Fertile window starts 6 days before ovulation
+                        $fertileWindowEnd = clone $ovulationDate;
+                        $fertileWindowEnd->add(new DateInterval("P1D")); // Fertile window ends 1 day after ovulation
+
+                        // Display fertile window
+                        echo '<li><span class="icon icon-2"></span> Fertile window: <span class="highlight">';
+                        echo 'Days ' . $fertileWindowStart->format('d') . '-' . $fertileWindowEnd->format('d');
+                        echo '</span></li>';
+                    } else {
+                        echo "<li><span class='icon icon-2'></span> Fertile window: <span class='highlight'>Not available</span></li>";
+                    }
+
+                    $stmt->close();
+                    ?>
+
+
+                </span></li>
+                <li><span class="icon icon-3"></span> Recommended conception timing: <span class="highlight">
+                <?php
+                // Query to fetch the start date of the period for the user
+                $query = "SELECT LastPeriodDate, AverageCycleLength FROM periodpredictions WHERE UserID = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("i", $userID);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $lastPeriodDate = new DateTime($row['LastPeriodDate']);
+                    $averageCycleLength = $row['AverageCycleLength'];
+
+                    // Calculate recommended conception timing
+                    $conceptionTimingStart = clone $lastPeriodDate;
+                    $conceptionTimingStart->add(new DateInterval("P" . round($averageCycleLength * 0.25) . "D")); // Recommended timing starts around 25% into the cycle
+                    $conceptionTimingEnd = clone $lastPeriodDate;
+                    $conceptionTimingEnd->add(new DateInterval("P" . round($averageCycleLength * 0.75) . "D")); // Recommended timing ends around 75% into the cycle
+
+                    // Display recommended conception timing
+                    echo '<li><span class="icon icon-3"></span> Recommended conception timing: <span class="highlight">';
+                    echo $conceptionTimingStart->format('Y-m-d') . ' to ' . $conceptionTimingEnd->format('Y-m-d');
+                    echo '</span></li>';
+                } else {
+                    echo "<li><span class='icon icon-3'></span> Recommended conception timing: <span class='highlight'>Not available</span></li>";
+                }
+
+                $stmt->close();
+                ?>
+                </span></li>
             </ul>
         </div>
     </div>

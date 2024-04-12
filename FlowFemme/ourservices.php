@@ -155,7 +155,7 @@
       <div class="service-list">
         <div class="service-item">
           <img src="Images/service1.png" alt="TalentHub Connect Proposal">
-          <h3>Periods Tracker and Menstrual Cycle Tracking</h3>
+          <h3>Menstrual Cycle Tracking</h3>
           <p>
             Our intuitive tracking system offers seamless monitoring of your menstrual cycle,
             allowing you to effortlessly log period details and predict future cycles with precision.
@@ -180,7 +180,7 @@
         </div>
         <div class="service-item">
           <img src="Images/service3.png" alt="Employer Services">
-          <h3>Menstual Period Predictions</h3>
+          <h3>Menstual Period and fertility Predictions</h3>
           <p>
             Our platform goes beyond basic tracking by providing personalized predictions for your upcoming menstrual cycles based on the data you've diligently logged.
             With advanced algorithms analyzing your historical cycle data and symptom patterns, you'll receive tailored forecasts that empower you to plan and prepare with confidence.
