@@ -601,23 +601,49 @@ if ($result) {
     }
 
 
-    function updatePrediction(predictionID) {
-        // Fetch the prediction data using AJAX
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "fetch_prediction_data.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Display the fetched data in the popup
-                document.getElementById("updatePopupContent").innerHTML = xhr.responseText;
-                // Show the popup
-                document.getElementById("updatePopup").style.display = "block";
-            }
-        };
-        // Send the prediction ID as data in the POST request
-        xhr.send("prediction_id=" + predictionID);
-    }
-</script>
+          // Function to open the update popup
+      function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
+        // Populate form fields with existing data
+        document.getElementById("prediction_id").value = predictionID;
+        document.getElementById("editLastPeriodDate").value = lastPeriodDate;
+        document.getElementById("editCycleLength").value = cycleLength;
+        document.getElementById("editAveragePeriodLength").value = averagePeriodLength;
+        
+        // Show the popup
+        document.getElementById("updatePopup").style.display = "block";
+      }
 
+      // Function to close the update popup
+      function closeUpdatePopup() {
+        // Hide the popup
+        document.getElementById("updatePopup").style.display = "none";
+      }
+
+      // Function to save changes using AJAX
+      function saveChanges() {
+        // Get form data
+        var formData = new FormData(document.getElementById("editForm"));
+
+        // Send AJAX request
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "update_prediction.php", true);
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            // Check if the update was successful
+            if (xhr.responseText.trim() === "success") {
+              // Reload the page to reflect changes
+              location.reload();
+            } else {
+              alert("Error updating record: " + xhr.responseText);
+            }
+          } else {
+            alert("Error: " + xhr.statusText);
+          }
+        };
+        xhr.onerror = function () {
+          alert("Network Error");
+        };
+        xhr.send(formData);
+      }
 </body>
 </html>
