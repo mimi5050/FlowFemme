@@ -339,6 +339,7 @@ if ($result) {
     /* Define styles for table body */
     table tbody {
         color: #333; /* Set text color for table body */
+        font-size:12px;
     }
 
     /* Define styles for table data cells */
