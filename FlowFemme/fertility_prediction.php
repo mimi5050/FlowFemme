@@ -283,6 +283,15 @@ table{
     table td {
         padding: 10px; 
     }
+    .fertility-prediction-table h2 {
+    margin-left: 40px;
+    font-size: 24px; 
+    font-weight: bold;
+    color:  #07bca3; 
+    margin-bottom: 20px; 
+    text-align:center;
+}
+
 
   
     </style>
@@ -350,7 +359,7 @@ table{
                     <th>Average Period Length</th>
                     <th>Fertile Start Date</th>
                     <th>Fertile End Date</th>
-                    <th>Actions</th> <!-- New column for actions -->
+                    <th>Actions</th> 
                 </tr>
             </thead>
             <tbody>
