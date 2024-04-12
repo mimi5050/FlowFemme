@@ -382,7 +382,7 @@ table{
                         // Add action buttons
                         echo "<td>";
                         echo "<a href='update_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-edit'></i></a>";
-                        echo "<a href='delete_fertility_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-trash'></i></a>";
+                        echo "<a href='javascript:void(0)' onclick='confirmDelete(" . $row["PredictionID"] . ")'><i class='fas fa-trash'></i></a>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -396,5 +396,16 @@ table{
             </tbody>
         </table>
     </section>
+    <script>
+    // Function to display confirmation popup
+    function confirmDelete(predictionID) {
+        // Display confirmation popup
+        var confirmDelete = confirm("Are you sure you want to delete this fertility prediction?");
+        
+        // If user confirms deletion, redirect to delete_fertility_prediction.php with predictionID parameter
+        if (confirmDelete) {
+            window.location.href = "delete_fertility_prediction.php?id=" + predictionID;
+        }
+    }
 </body>
 </html>
