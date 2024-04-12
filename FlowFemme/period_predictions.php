@@ -394,16 +394,16 @@ if ($result) {
         background-color: #05a393;
     }
 
-    
+
     .update-popup {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    max-width: 300px;
-    height:500px;
-    text-align: center;
-    z-index: 1000;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 300px;
+        height:300px;
+        text-align: center;
+        z-index: 1000;
 }
 .update-popup label {
     display: block;
