@@ -369,8 +369,7 @@ if ($result) {
         border: 1px solid #ccc;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
-        width:30%;
-        height:30%;
+        max-width: 300px;
         text-align: center;
         z-index: 1000;
        
