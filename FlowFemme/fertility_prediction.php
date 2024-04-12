@@ -328,7 +328,7 @@ button[type="submit"]:hover {
             <tbody>
                 <?php
                 // Include your database connection file
-                include 'db_connection.php';
+                include 'connection.php';
 
                 // Fetch fertility predictions from the database
                 $sql = "SELECT * FROM fertilitypredictions";
