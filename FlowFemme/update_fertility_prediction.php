@@ -8,12 +8,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Extract data
-    $predictionID = $data['PredictionID'];
-    $lastPeriodDate = $data['LastPeriodDate'];
-    $cycleLength = $data['AverageCycleLength'];
-    $periodLength = $data['AveragePeriodLength'];
-    $fertileStartDate = $data['FertileStartDate'];
-    $fertileEndDate = $data['FertileEndDate'];
+    $predictionID = $data['predictionID'];
+    $lastPeriodDate = $data['lastPeriodDate'];
+    $cycleLength = $data['cycleLength'];
+    $periodLength = $data['periodLength'];
+    $fertileStartDate = $data['fertileStartDate'];
+    $fertileEndDate = $data['fertileEndDate'];
 
     // Prepare the SQL statement
     $stmt = $conn->prepare("UPDATE fertilitypredictions SET LastPeriodDate=?, AverageCycleLength=?, AveragePeriodLength=?, FertileStartDate=?, FertileEndDate=? WHERE PredictionID=?");
