@@ -328,25 +328,25 @@ if ($result) {
     }
    
     table tr {
-        background-color: #f2f2f2; /* Set background color for table rows */
+        background-color: #f2f2f2; 
     }
 
-    /* Define styles for table header cells */
+    
     table th {
-        background-color: #07bca3; /* Set background color for table header cells */
-        color: white; /* Set text color for table header cells */
-        padding: 10px; /* Add padding to table header cells */
+        background-color: #07bca3; 
+        color: white; 
+        padding: 10px; 
     }
 
-    /* Define styles for table body */
+  
     table tbody {
-        color: #333; /* Set text color for table body */
+        color: #333; 
         font-size:12px;
     }
 
-    /* Define styles for table data cells */
+  
     table td {
-        padding: 10px; /* Add padding to table data cells */
+        padding: 10px; 
     }
 
   
@@ -459,8 +459,19 @@ if ($result) {
 </main>
 <script>
     function deletePrediction(predictionID) {
-        // Confirm with the user before proceeding with the deletion
-        if (confirm("Are you sure you want to delete this prediction?")) {
+        // Create a div element for the popup
+        var popup = document.createElement('div');
+        popup.classList.add('popup');
+
+        // Create a confirmation message
+        var message = document.createElement('div');
+        message.innerHTML = "Are you sure you want to delete this prediction?";
+        popup.appendChild(message);
+
+        // Create buttons for confirmation and cancellation
+        var confirmButton = document.createElement('button');
+        confirmButton.innerText = "Confirm";
+        confirmButton.onclick = function() {
             // Send an AJAX request to the server to delete the prediction
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "delete_prediction.php", true);
@@ -480,8 +491,24 @@ if ($result) {
             };
             // Send the prediction ID as data in the POST request
             xhr.send("prediction_id=" + predictionID);
-        }
+
+            // Remove the popup from the DOM
+            document.body.removeChild(popup);
+        };
+        popup.appendChild(confirmButton);
+
+        var cancelButton = document.createElement('button');
+        cancelButton.innerText = "Cancel";
+        cancelButton.onclick = function() {
+            // Remove the popup from the DOM
+            document.body.removeChild(popup);
+        };
+        popup.appendChild(cancelButton);
+
+        // Add the popup to the body
+        document.body.appendChild(popup);
     }
 </script>
+
 </body>
 </html>
