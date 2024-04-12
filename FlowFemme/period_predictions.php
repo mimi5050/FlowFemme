@@ -350,18 +350,29 @@ if ($result) {
     }
 
      /* Styling for the popup */
+     .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999; /* Ensure it's above other elements */
+    }
+
      .popup {
         position: fixed;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        background-color: #fff;
         border: 1px solid #ccc;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         padding: 20px;
         max-width: 300px;
         text-align: center;
-        z-index: 999;
-        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+       
     }
 
     .popup div {
@@ -491,56 +502,64 @@ if ($result) {
 
 </main>
 <script>
-    function deletePrediction(predictionID) {
-        // Create a div element for the popup
-        var popup = document.createElement('div');
-        popup.classList.add('popup');
+      function deletePrediction(predictionID) {
+          // Create overlay element
+          var overlay = document.createElement('div');
+          overlay.classList.add('overlay');
+          document.body.appendChild(overlay);
 
-        // Create a confirmation message
-        var message = document.createElement('div');
-        message.innerHTML = "Are you sure you want to delete this prediction?";
-        popup.appendChild(message);
+          // Create a div element for the popup
+          var popup = document.createElement('div');
+          popup.classList.add('popup');
 
-        // Create buttons for confirmation and cancellation
-        var confirmButton = document.createElement('button');
-        confirmButton.innerText = "Confirm";
-        confirmButton.onclick = function() {
-            // Send an AJAX request to the server to delete the prediction
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "delete_prediction.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Parse the JSON response
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        // If deletion was successful, reload the page to reflect changes
-                        location.reload();
-                    } else {
-                        // If an error occurred, display an error message
-                        alert("Failed to delete prediction: " + response.error);
-                    }
-                }
-            };
-            // Send the prediction ID as data in the POST request
-            xhr.send("prediction_id=" + predictionID);
+          // Create a confirmation message
+          var message = document.createElement('div');
+          message.innerHTML = "Are you sure you want to delete this prediction?";
+          popup.appendChild(message);
 
-            // Remove the popup from the DOM
-            document.body.removeChild(popup);
-        };
-        popup.appendChild(confirmButton);
+          // Create buttons for confirmation and cancellation
+          var confirmButton = document.createElement('button');
+          confirmButton.innerText = "Confirm";
+          confirmButton.onclick = function() {
+              // Send an AJAX request to the server to delete the prediction
+              var xhr = new XMLHttpRequest();
+              xhr.open("POST", "delete_prediction.php", true);
+              xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+              xhr.onreadystatechange = function() {
+                  if (xhr.readyState === 4 && xhr.status === 200) {
+                      // Parse the JSON response
+                      var response = JSON.parse(xhr.responseText);
+                      if (response.success) {
+                          // If deletion was successful, reload the page to reflect changes
+                          location.reload();
+                      } else {
+                          // If an error occurred, display an error message
+                          alert("Failed to delete prediction: " + response.error);
+                      }
+                  }
+              };
+              // Send the prediction ID as data in the POST request
+              xhr.send("prediction_id=" + predictionID);
 
-        var cancelButton = document.createElement('button');
-        cancelButton.innerText = "Cancel";
-        cancelButton.onclick = function() {
-            // Remove the popup from the DOM
-            document.body.removeChild(popup);
-        };
-        popup.appendChild(cancelButton);
+              // Remove the popup and overlay from the DOM
+              document.body.removeChild(popup);
+              document.body.removeChild(overlay);
+          };
+          popup.appendChild(confirmButton);
 
-        // Add the popup to the body
-        document.body.appendChild(popup);
-    }
+          var cancelButton = document.createElement('button');
+          cancelButton.innerText = "Cancel";
+          cancelButton.onclick = function() {
+              // Remove the popup and overlay from the DOM
+              document.body.removeChild(popup);
+              document.body.removeChild(overlay);
+          };
+          popup.appendChild(cancelButton);
+
+          // Add the popup to the body
+          document.body.appendChild(popup);
+      }
+
 ``
 </script>
 
