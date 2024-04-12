@@ -1,3 +1,51 @@
+<?php
+// Start or resume a session
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['UserID'])) {
+    // Redirect the user to the login page if not logged in
+    header("Location: login.php");
+    exit(); // Stop script execution
+}
+
+// Include connection.php to establish database connection
+include 'connection.php';
+
+// Fetch logged-in user's ID from session
+$userID = $_SESSION['UserID'];
+// Fetch data from periodpredictions table for the logged-in user
+// Initialize an empty array to store the fetched data
+$data = array();
+
+// Query to fetch data from periodpredictions and fertilitypredictions tables for the logged-in user
+$query = "SELECT pp.*, fp.*
+          FROM periodpredictions AS pp
+          LEFT JOIN fertilitypredictions AS fp ON pp.UserID = fp.UserID
+          WHERE pp.UserID = $userID";
+
+// Execute the query
+$result = mysqli_query($conn, $query);
+
+// Check if the query was successful
+if ($result) {
+    // Fetch the rows
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Add the row to the $data array
+        $data[] = $row;
+    }
+
+    // Free result set
+    mysqli_free_result($result);
+} else {
+    // If there's an error with the query
+    echo "Error: " . mysqli_error($conn);
+}
+
+// Now the $data array contains the fetched data from both tables
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -307,6 +355,55 @@
             </div>
             <button type="submit">Predict Period</button>
         </form>
+        <?php
+// Fetch period prediction data from the database
+$query = "SELECT * FROM periodpredictions WHERE UserID = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Check if there is data available
+if ($result->num_rows > 0) {
+    echo '<div style="margin-top: 30px;">';
+    echo '<h2>Period Predictions</h2>'; // Title for the period prediction table
+    echo '<table border="1" cellpadding="10" style="border-collapse: collapse;">';
+    echo '<thead>';
+    echo '<tr>';
+    echo '<th>Last Period Date</th>';
+    echo '<th>Average Cycle Length</th>';
+    echo '<th>Average Period Length</th>';
+    echo '<th>Next Period Start Date</th>';
+    echo '<th>Next Period End Date</th>';
+    echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+    // Loop through each row of the result set
+    while ($row = $result->fetch_assoc()) {
+        echo '<tr>';
+        echo '<td>' . $row['LastPeriodDate'] . '</td>';
+        echo '<td>' . $row['AverageCycleLength'] . '</td>';
+        echo '<td>' . $row['AveragePeriodLength'] . '</td>';
+        echo '<td>' . $row['NextPeriodStartDate'] . '</td>';
+        echo '<td>' . $row['NextPeriodEndDate'] . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+} else {
+    // If no data found, display a message
+    echo '<div style="margin-top: 30px;">';
+    echo '<h2>Period Predictions</h2>'; // Title for the period prediction table
+    echo '<p>No period predictions available.</p>';
+    echo '</div>';
+}
+
+// Close the prepared statement and database connection
+$stmt->close();
+$conn->close();
+?>
+
 
     </div>
 </main>

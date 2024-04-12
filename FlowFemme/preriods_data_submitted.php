@@ -241,7 +241,7 @@ if ($result) {
                             $overallSeverity = count($potentialSymptoms) > 0 ? $potentialSeverity / count($potentialSymptoms) : 0;
 
                             // Display potential symptoms and their overall severity
-                            echo "<li><span class='icon-3'></span> Potential symptoms expected: ";
+                            echo "<li><span class='icon-3'></span>Potential symptoms expected: ";
                             if (count($potentialSymptoms) > 0) {
                                 echo implode(", ", $potentialSymptoms);
                                 echo " (Severity: " . round($overallSeverity, 2) . ")";
