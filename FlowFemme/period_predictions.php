@@ -317,6 +317,16 @@ if ($result) {
     .action-button:hover {
         background-color: #05a393; 
     }
+
+    .custom-table {
+        border: 1px solid black; /* Set border width and color */
+        border-collapse: collapse; /* Collapse border spacing */
+        width: 100%; /* Set table width to 100% */
+    }
+    .custom-table th, .custom-table td {
+        padding: 10px; /* Set cell padding */
+        border: 1px solid black; /* Set cell border */
+    }
   
     </style>
 
