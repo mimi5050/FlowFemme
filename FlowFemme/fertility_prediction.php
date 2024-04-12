@@ -388,38 +388,40 @@ table{
                 </tr>
             </thead>
             <tbody>
+               <!-- Update the PHP code to include a dynamic call to showConfirmation() -->
                 <?php
-                // Include your database connection file
-                include 'connection.php';
+                    // Include your database connection file
+                    include 'connection.php';
 
-                // Fetch fertility predictions from the database
-                $sql = "SELECT * FROM fertilitypredictions";
-                $result = mysqli_query($conn, $sql);
+                    // Fetch fertility predictions from the database
+                    $sql = "SELECT * FROM fertilitypredictions";
+                    $result = mysqli_query($conn, $sql);
 
-                // Check if there are any rows in the result
-                if (mysqli_num_rows($result) > 0) {
-                    // Output data of each row
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        echo "<td>" . $row["LastPeriodDate"] . "</td>";
-                        echo "<td>" . $row["AverageCycleLength"] . "</td>";
-                        echo "<td>" . $row["AveragePeriodLength"] . "</td>";
-                        echo "<td>" . $row["FertileStartDate"] . "</td>";
-                        echo "<td>" . $row["FertileEndDate"] . "</td>";
-                        // Add action buttons
-                        echo "<td>";
-                        echo "<a href='update_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-edit'></i></a>";
-                        echo "<a href='javascript:void(0)' onclick='confirmDelete(" . $row["PredictionID"] . ")'><i class='fas fa-trash'></i></a>";
-                        echo "</td>";
-                        echo "</tr>";
+                    // Check if there are any rows in the result
+                    if (mysqli_num_rows($result) > 0) {
+                        // Output data of each row
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>" . $row["LastPeriodDate"] . "</td>";
+                            echo "<td>" . $row["AverageCycleLength"] . "</td>";
+                            echo "<td>" . $row["AveragePeriodLength"] . "</td>";
+                            echo "<td>" . $row["FertileStartDate"] . "</td>";
+                            echo "<td>" . $row["FertileEndDate"] . "</td>";
+                            // Add action buttons
+                            echo "<td>";
+                            echo "<a href='update_prediction.php?id=" . $row["PredictionID"] . "'><i class='fas fa-edit'></i></a>";
+                            echo "<a href='javascript:void(0)' onclick='showConfirmation(" . $row["PredictionID"] . ")'><i class='fas fa-trash'></i></a>"; // Here's the modification
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='8'>No fertility predictions found</td></tr>";
                     }
-                } else {
-                    echo "<tr><td colspan='8'>No fertility predictions found</td></tr>";
-                }
 
-                // Close the database connection
-                mysqli_close($conn);
+                    // Close the database connection
+                    mysqli_close($conn);
                 ?>
+
             </tbody>
         </table>
     </section>
