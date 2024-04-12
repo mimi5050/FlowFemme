@@ -440,17 +440,17 @@ if ($result) {
     color: #888;
 }
 #editPopup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 999;
-      background-color: rgba(0, 0, 0, 0.5);
-  
-    }
-    .popup-content {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
     background-color: #fff;
     position: absolute;
     top: 50%;
@@ -459,19 +459,17 @@ if ($result) {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    width: 80%;
+    width: 80%; /* Adjust width as needed */
+    max-width: 400px; /* Adjust max-width as needed */
     color: #333; 
     font-family: Arial, sans-serif; 
 }
 
 .popup-content input,
 .popup-content textarea {
-    width: 80%;
+    width: 100%; /* Adjust width as needed */
     padding: 10px;
-    margin-bottom:40px;
-    margin-top:10px;
-    margin-left:30px;
+    margin: 10px 0; /* Adjust margin as needed */
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -482,18 +480,20 @@ if ($result) {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 45%;
-    height: 10px; 
+    width: 45%; /* Adjust width as needed */
+    padding: 10px;
     margin-right: 5%; 
-    text-align:center;
+    margin-top: 10px; /* Adjust margin as needed */
+    text-align: center;
 }
 
 .popup-content button.close {
     background-color: #ccc;
     color: #333;
     width: 45%; 
+    padding: 10px;
     margin-right: 0;
-    margin-left:120px;
+    margin-left: 5%; /* Adjust margin as needed */
 }
 
   
@@ -657,8 +657,8 @@ if ($result) {
     }
 
 
-          // Function to open the update popup
-      function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
+        // Function to open the update popup
+    function openUpdatePopup(predictionID, lastPeriodDate, cycleLength, averagePeriodLength) {
         // Populate form fields with existing data
         document.getElementById("prediction_id").value = predictionID;
         document.getElementById("editLastPeriodDate").value = lastPeriodDate;
@@ -667,16 +667,16 @@ if ($result) {
         
         // Show the popup
         document.getElementById("updatePopup").style.display = "block";
-      }
+    }
 
-      // Function to close the update popup
-      function closeUpdatePopup() {
+    // Function to close the update popup
+    function closeUpdatePopup() {
         // Hide the popup
         document.getElementById("updatePopup").style.display = "none";
-      }
+    }
 
-      // Function to save changes using AJAX
-      function saveChanges() {
+    // Function to save changes using AJAX
+    function saveChanges() {
         // Get form data
         var formData = new FormData(document.getElementById("editForm"));
 
@@ -684,22 +684,23 @@ if ($result) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "update_prediction.php", true);
         xhr.onload = function () {
-          if (xhr.status === 200) {
-            // Check if the update was successful
-            if (xhr.responseText.trim() === "success") {
-              // Reload the page to reflect changes
-              location.reload();
+            if (xhr.status === 200) {
+                // Check if the update was successful
+                if (xhr.responseText.trim() === "success") {
+                    // Reload the page to reflect changes
+                    location.reload();
+                } else {
+                    alert("Error updating record: " + xhr.responseText);
+                }
             } else {
-              alert("Error updating record: " + xhr.responseText);
+                alert("Error: " + xhr.statusText);
             }
-          } else {
-            alert("Error: " + xhr.statusText);
-          }
         };
         xhr.onerror = function () {
-          alert("Network Error");
+            alert("Network Error");
         };
         xhr.send(formData);
-      }
+    }
+
 </body>
 </html>
