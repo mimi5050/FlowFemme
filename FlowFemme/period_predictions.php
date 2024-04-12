@@ -420,7 +420,7 @@ if ($result) {
     border-radius: 5px;
     margin-bottom: 10px;
     margin-right:20px;
-    margin-left: -7px;
+    margin-left: -12px;
 }
 
 .update-popup button[type="submit"],
